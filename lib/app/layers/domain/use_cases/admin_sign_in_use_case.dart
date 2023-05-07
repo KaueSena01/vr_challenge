@@ -6,7 +6,7 @@ class AdminSignInUseCase {
 
   AdminSignInUseCase({required this.adminRepository});
 
-  Future<void> call(AdminEntity adminEntity) async {
-    await adminRepository.signIn(adminEntity);
+  Future<AdminEntity> call(AdminEntity adminEntity) async {
+    return await adminRepository.signIn(adminEntity);
   }
 }

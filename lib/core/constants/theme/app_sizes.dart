@@ -20,6 +20,7 @@ abstract class AppSizes {
   static double size120 = 120.0;
   static double size150 = 150.0;
   static double size210 = 210.0;
+  static double size240 = 240.0;
   static double size285 = 285.0;
 }
 
@@ -30,9 +31,9 @@ abstract class BorderSize {
 }
 
 abstract class BorderRadiusSize {
-  static double borderRadiusSmall = 5.0;
-  static double borderRadiusMedium = 12.0;
-  static double borderRadiusLarge = 15.0;
+  static double borderRadiusSmall = 12.0;
+  static double borderRadiusMedium = 15.0;
+  static double borderRadiusLarge = 20.0;
 }
 
 abstract class FontSize {

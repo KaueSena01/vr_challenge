@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
 import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
 
-class CustomTextField extends StatefulWidget {
+class CustomLoginTextField extends StatefulWidget {
   final String? labelText;
   final Color? labelTextColor;
   final String? hintText;
@@ -24,7 +23,7 @@ class CustomTextField extends StatefulWidget {
   final GlobalKey<FormFieldState>? formFieldKey;
   final EdgeInsets? margin;
 
-  const CustomTextField({
+  const CustomLoginTextField({
     Key? key,
     this.labelText,
     this.labelTextColor,
@@ -47,10 +46,10 @@ class CustomTextField extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomTextField> createState() => _CustomTextFieldState();
+  State<CustomLoginTextField> createState() => _CustomLoginTextFieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class _CustomLoginTextFieldState extends State<CustomLoginTextField> {
   bool isObscure = false;
 
   @override
@@ -69,17 +68,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
         readOnly: widget.readOnly,
         initialValue: widget.initialValue,
         inputFormatters: widget.inputFormatters,
+        obscureText: isObscure,
         validator: widget.validator,
         onSaved: widget.onSaved,
         keyboardType: widget.textInputType,
         maxLines: widget.maxLines,
+        textAlign: TextAlign.center,
         style: AppTextStyles.textTheme.labelSmall!.apply(
-          color: widget.inputTextColor ?? AppColors.primaryColor,
+          color: widget.inputTextColor ?? AppColors.whiteColor,
         ),
         decoration: InputDecoration(
-          filled: true,
-          isDense: true,
-          fillColor: AppColors.whiteColor,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: widget.labelText,
           labelStyle: AppTextStyles.textTheme.headlineSmall!.apply(
@@ -87,33 +85,21 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           hintText: widget.hintText,
           hintStyle: AppTextStyles.textTheme.labelSmall!.apply(
-            color: widget.hintTextColor ?? AppColors.labelColor,
+            color: widget.hintTextColor ?? AppColors.whiteColor,
           ),
-          prefixIcon: Icon(Icons.search, size: AppSizes.size25),
-          border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
-            borderSide: BorderSide(
-              color: AppColors.whiteColor,
-              width: 1,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
-            borderSide: BorderSide(
-              color: AppColors.whiteColor,
-              width: 1,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
-            borderSide: BorderSide(
-              color: AppColors.whiteColor,
-              width: 1,
-            ),
-          ),
+          suffixIcon: widget.isSecret
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isObscure = !isObscure;
+                    });
+                  },
+                  icon: Icon(
+                    isObscure ? Icons.visibility : Icons.visibility_off,
+                    color: AppColors.primaryColor,
+                  ),
+                )
+              : null,
         ),
       ),
     );

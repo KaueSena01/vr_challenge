@@ -27,7 +27,7 @@ abstract class AppTheme {
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(BorderRadiusSize.borderRadiusMedium),
+            Radius.circular(BorderRadiusSize.borderRadiusSmall),
           ),
         ),
         elevation: 0,
@@ -38,7 +38,7 @@ abstract class AppTheme {
         backgroundColor: AppColors.primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
-            Radius.circular(BorderRadiusSize.borderRadiusMedium),
+            Radius.circular(BorderRadiusSize.borderRadiusSmall),
           ),
         ),
         side: BorderSide(

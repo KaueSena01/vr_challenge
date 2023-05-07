@@ -3,7 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
-import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';
+import 'package:vr_challenge/app/layers/presentation/widgets/custom_login_text_field.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
 import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
 import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
@@ -87,13 +87,13 @@ class LoginPage extends StatelessWidget {
                             textAlign: TextAlign.center,
                           ),
                           CustomSpace(height: AppSizes.size20),
-                          CustomTextField(
+                          CustomLoginTextField(
                             hintText: "Digite seu e-mail",
                             controller: _emailController,
                             validator: emailValidator,
                           ),
                           CustomSpace(height: AppSizes.size25),
-                          CustomTextField(
+                          CustomLoginTextField(
                             hintText: "Digite sua senha",
                             controller: _passwordController,
                             validator: passwordValidator,

@@ -1,4 +1,5 @@
 import 'package:asuka/snackbars/asuka_snack_bar.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vr_challenge/app/layers/domain/entities/admin_entity.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/admin_sign_in_use_case.dart';
@@ -19,9 +20,10 @@ abstract class _LoginStoreBase with Store {
     loading = true;
 
     try {
-      await _signInUseCase(
+      final admin = await _signInUseCase(
         AdminEntity(name: "", email: email, password: password),
       );
+      Modular.to.pushReplacementNamed('/home', arguments: admin);
     } catch (_) {
       AsukaSnackbar.alert(
         "Administrador não encontrado, verifique suas credenciais!",

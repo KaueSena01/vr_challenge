@@ -8,7 +8,7 @@ class AdminRepositoryImpl implements AdminRepository {
   AdminRepositoryImpl({required this.adminDataSource});
 
   @override
-  Future<void> signIn(AdminEntity adminEntity) async {
-    await adminDataSource.signIn(adminEntity);
+  Future<AdminEntity> signIn(AdminEntity adminEntity) async {
+    return await adminDataSource.signIn(adminEntity);
   }
 }

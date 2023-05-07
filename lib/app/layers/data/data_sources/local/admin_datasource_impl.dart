@@ -10,7 +10,7 @@ class AdminDataSourceImpl extends AdminDataSource {
   late Database db;
 
   @override
-  Future<void> signIn(AdminEntity adminEntity) async {
+  Future<AdminEntity> signIn(AdminEntity adminEntity) async {
     db = await DatabaseProvider.instance.database;
 
     final admin = AdminService(database: db);
@@ -19,9 +19,8 @@ class AdminDataSourceImpl extends AdminDataSource {
         adminEntity.email,
         adminEntity.password,
       );
-      log(result.name);
-      log(result.email);
-      log(result.password);
+
+      return result;
     } catch (_) {
       log(_.toString());
       rethrow;

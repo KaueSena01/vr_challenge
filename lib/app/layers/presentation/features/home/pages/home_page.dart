@@ -1,39 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:vr_challenge/app/layers/domain/entities/admin_entity.dart';
+import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/announce.dart';
+import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/courses.dart';
+import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/home_background.dart';
+import 'package:vr_challenge/app/layers/presentation/features/home/stores/home_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/bottom_navigation_bar.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
 
-import '../stores/admin_store.dart';
-
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({
+    super.key,
+    required this.adminEntity,
+  });
+
+  final AdminEntity adminEntity;
+  final HomeStore _homeStore = Modular.get<HomeStore>();
 
   @override
   Widget build(BuildContext context) {
-    final AdminStore adminStore = Modular.get<AdminStore>();
-    TextEditingController emailTextEditingController = TextEditingController();
-    TextEditingController passwordTextEditingController =
-        TextEditingController();
-
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: AppColors.whiteColor,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          TextFormField(
-            controller: emailTextEditingController,
-          ),
-          TextFormField(
-            controller: passwordTextEditingController,
-          ),
-          ElevatedButton(
-            child: const Text("Entrar"),
-            onPressed: () async => await adminStore.signIn(
-              emailTextEditingController.text,
-              passwordTextEditingController.text,
-            ),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            HomeBackground(adminEntity: adminEntity),
+            const Announce(),
+            const Courses(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Observer(
+        builder: (_) => CustomBottomNavigationBar(homeStore: _homeStore),
       ),
     );
   }
