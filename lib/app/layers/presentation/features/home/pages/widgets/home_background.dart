@@ -77,7 +77,10 @@ class HomeBackgroundCard extends StatelessWidget {
           CustomSpace(height: AppSizes.size40),
           CustomTextField(
             hintText: "Pesquisar por...",
-            prefixIcon: Icon(Icons.search, size: AppSizes.size25),
+            prefixIcon: Icon(
+              Icons.search,
+              size: AppSizes.size25,
+            ),
           ),
         ],
       ),

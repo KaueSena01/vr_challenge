@@ -29,6 +29,20 @@ abstract class _CourseStoreBase with Store {
   @observable
   List<CourseEntity> coursesList = [];
 
+  @observable
+  String searchFilter = '';
+
+  @computed
+  List<CourseEntity> get filteredCourses => coursesList
+      .where((course) =>
+          course.name.toLowerCase().contains(searchFilter.toLowerCase()))
+      .toList();
+
+  @action
+  void searchCourses(String search) {
+    searchFilter = search.toLowerCase();
+  }
+
   @action
   Future<void> createCourse(
     String name,

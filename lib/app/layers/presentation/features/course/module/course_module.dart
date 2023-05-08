@@ -6,6 +6,7 @@ import 'package:vr_challenge/app/layers/domain/use_cases/delete_course_use_case.
 import 'package:vr_challenge/app/layers/domain/use_cases/get_all_courses_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_use_case.dart';
 import 'package:vr_challenge/app/layers/presentation/features/course/pages/course_page.dart';
+import 'package:vr_challenge/app/layers/presentation/features/course/pages/courses_page.dart';
 import 'package:vr_challenge/app/layers/presentation/features/course/pages/create_course_page.dart';
 import 'package:vr_challenge/app/layers/presentation/features/course/pages/update_course_page.dart';
 import 'package:vr_challenge/app/layers/presentation/features/course/stores/course_store.dart';
@@ -35,6 +36,10 @@ class CourseModule extends Module {
     ChildRoute(
       '/update',
       child: (context, agrs) => UpdateCoursePage(courseEntity: agrs.data),
+    ),
+    ChildRoute(
+      '/courses',
+      child: (context, agrs) => CoursesPage(),
     ),
   ];
 }

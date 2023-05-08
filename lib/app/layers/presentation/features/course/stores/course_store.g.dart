@@ -9,6 +9,14 @@ part of 'course_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CourseStore on _CourseStoreBase, Store {
+  Computed<List<CourseEntity>>? _$filteredCoursesComputed;
+
+  @override
+  List<CourseEntity> get filteredCourses => (_$filteredCoursesComputed ??=
+          Computed<List<CourseEntity>>(() => super.filteredCourses,
+              name: '_CourseStoreBase.filteredCourses'))
+      .value;
+
   late final _$loadingAtom =
       Atom(name: '_CourseStoreBase.loading', context: context);
 
@@ -41,13 +49,29 @@ mixin _$CourseStore on _CourseStoreBase, Store {
     });
   }
 
+  late final _$searchFilterAtom =
+      Atom(name: '_CourseStoreBase.searchFilter', context: context);
+
+  @override
+  String get searchFilter {
+    _$searchFilterAtom.reportRead();
+    return super.searchFilter;
+  }
+
+  @override
+  set searchFilter(String value) {
+    _$searchFilterAtom.reportWrite(value, super.searchFilter, () {
+      super.searchFilter = value;
+    });
+  }
+
   late final _$createCourseAsyncAction =
       AsyncAction('_CourseStoreBase.createCourse', context: context);
 
   @override
-  Future<void> createCourse(String title, String description, String syllabus) {
+  Future<void> createCourse(String name, String description, String syllabus) {
     return _$createCourseAsyncAction
-        .run(() => super.createCourse(title, description, syllabus));
+        .run(() => super.createCourse(name, description, syllabus));
   }
 
   late final _$getAllCoursesAsyncAction =
@@ -63,9 +87,9 @@ mixin _$CourseStore on _CourseStoreBase, Store {
 
   @override
   Future<void> updateCourse(
-      int id, String title, String description, String syllabus) {
+      int id, String name, String description, String syllabus) {
     return _$updateCourseAsyncAction
-        .run(() => super.updateCourse(id, title, description, syllabus));
+        .run(() => super.updateCourse(id, name, description, syllabus));
   }
 
   late final _$deleteCourseAsyncAction =
@@ -76,11 +100,27 @@ mixin _$CourseStore on _CourseStoreBase, Store {
     return _$deleteCourseAsyncAction.run(() => super.deleteCourse(id));
   }
 
+  late final _$_CourseStoreBaseActionController =
+      ActionController(name: '_CourseStoreBase', context: context);
+
+  @override
+  void searchCourses(String search) {
+    final _$actionInfo = _$_CourseStoreBaseActionController.startAction(
+        name: '_CourseStoreBase.searchCourses');
+    try {
+      return super.searchCourses(search);
+    } finally {
+      _$_CourseStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 loading: ${loading},
-coursesList: ${coursesList}
+coursesList: ${coursesList},
+searchFilter: ${searchFilter},
+filteredCourses: ${filteredCourses}
     ''';
   }
 }

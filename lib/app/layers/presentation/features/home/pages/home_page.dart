@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             HomeBackgroundCard(adminEntity: widget.adminEntity),
-            // const Announce(),
             Observer(
               builder: (_) => _courseStore.loading
                   ? const Center(

@@ -10,6 +10,7 @@ class CustomTextField extends StatefulWidget {
   final String? hintText;
   final Color? hintTextColor;
   final Color? inputTextColor;
+  final Color? fillColor;
   final IconData? icon;
   final int minLines;
   final int maxLines;
@@ -33,6 +34,7 @@ class CustomTextField extends StatefulWidget {
     this.hintText,
     this.hintTextColor,
     this.inputTextColor,
+    this.fillColor,
     this.initialValue,
     this.icon,
     this.minLines = 1,
@@ -81,10 +83,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
         style: AppTextStyles.textTheme.labelSmall!.apply(
           color: widget.inputTextColor ?? AppColors.primaryColor,
         ),
+        cursorColor: AppColors.labelColor,
         decoration: InputDecoration(
           filled: true,
           isDense: true,
-          fillColor: AppColors.whiteColor,
+          fillColor: widget.fillColor ?? AppColors.whiteColor,
           contentPadding: widget.isInputForm
               ? EdgeInsets.fromLTRB(
                   AppSizes.size00,

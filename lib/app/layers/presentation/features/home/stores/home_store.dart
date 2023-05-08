@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/modal.dart';
 part 'home_store.g.dart';
@@ -20,7 +21,9 @@ abstract class _HomeStoreBase with Store {
         print("navegar para tela 1");
         break;
       case 1:
-        print("navegar para tela 2");
+        Modular.to.pushNamed(
+          '/course/courses',
+        );
         break;
       case 2:
         print("navegar para tela 3");
