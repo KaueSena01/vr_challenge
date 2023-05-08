@@ -48,7 +48,10 @@ void showBottomSheetModal(BuildContext context) {
                   color: AppColors.darkColor,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Modular.to.pop();
+                Modular.to.pushNamed('/student');
+              },
             ),
           ],
         ),

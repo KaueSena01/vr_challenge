@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/app/layers/domain/entities/course_entity.dart';
-import 'package:vr_challenge/app/layers/presentation/features/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/domain/entities/student_entity.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
 import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
 import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
 
-class CoursesList extends StatelessWidget {
-  const CoursesList({
+class StudentsList extends StatelessWidget {
+  const StudentsList({
     super.key,
-    required this.courseEntity,
+    required this.studentEntity,
     this.label,
-    this.onTap,
-    this.onCourseSelected,
-    this.selectedCourses,
+    this.onStudentSelected,
+    this.selectedStudents,
   });
 
-  final List<CourseEntity> courseEntity;
+  final List<StudentEntity> studentEntity;
   final String? label;
-  final void Function()? onTap;
-  final void Function(int courseId)? onCourseSelected;
-  final List<int>? selectedCourses;
+  final void Function(int courseId)? onStudentSelected;
+  final List<int>? selectedStudents;
 
   @override
   Widget build(BuildContext context) {
@@ -32,17 +29,16 @@ class CoursesList extends StatelessWidget {
           BorderRadiusSize.borderRadiusMedium,
         ),
       ),
-      child: courseEntity.isNotEmpty
+      child: studentEntity.isNotEmpty
           ? ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
-              itemCount: courseEntity.length,
+              itemCount: studentEntity.length,
               padding: EdgeInsets.all(AppSizes.size00),
               itemBuilder: (_, index) {
-                final course = courseEntity[index];
-                final isSelected =
-                    selectedCourses?.contains(course.id) ?? false;
-                final toggle = isSelected ? "Remover" : "Adicionar";
+                final course = studentEntity[index];
+                // final isSelected = selectedCourses?.contains(course.id) ?? false;
+                // final toggle = isSelected ? "Remover" : "Adicionar";
                 return Column(
                   children: [
                     if (index > 0)
@@ -62,18 +58,20 @@ class CoursesList extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: onCourseSelected != null
-                              ? () => onCourseSelected!(course.id!)
+                          onTap: onStudentSelected != null
+                              ? () => onStudentSelected!(course.id!)
                               : () => Modular.to.pushNamed(
-                                    '/course/course',
+                                    'update',
                                     arguments: course,
                                   ),
                           child: Text(
-                            label ?? toggle,
+                            label ?? "Editar",
                             style: AppTextStyles.textTheme.labelMedium!.apply(
-                              color: toggle == "Remover"
-                                  ? AppColors.dangerColor
-                                  : AppColors.tertiaryColor,
+                              color:
+                                  // toggle == "Remover"
+                                  //     ? AppColors.dangerColor
+                                  //     :
+                                  AppColors.tertiaryColor,
                             ),
                           ),
                         ),

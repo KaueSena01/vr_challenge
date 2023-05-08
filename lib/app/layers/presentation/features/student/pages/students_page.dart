@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/app/layers/presentation/features/course/pages/widgets/courses_list.dart';
-import 'package:vr_challenge/app/layers/presentation/features/course/pages/widgets/searchWithoutResult.dart';
 import 'package:vr_challenge/app/layers/presentation/features/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/student/pages/widgets/student_list.dart';
+import 'package:vr_challenge/app/layers/presentation/features/student/stores/student_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_subtitle.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';
@@ -11,23 +11,24 @@ import 'package:vr_challenge/app/layers/presentation/widgets/custom_title.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
 import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
 
-class CoursesPage extends StatefulWidget {
-  const CoursesPage({super.key});
+class StudentsPage extends StatefulWidget {
+  const StudentsPage({super.key});
 
   @override
-  State<CoursesPage> createState() => _CoursesPageState();
+  State<StudentsPage> createState() => _StudentsPageState();
 }
 
-class _CoursesPageState extends State<CoursesPage> {
+class _StudentsPageState extends State<StudentsPage> {
   final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
 
+  final StudentStore _studentStore = Modular.get<StudentStore>();
   final CourseStore _courseStore = Modular.get<CourseStore>();
 
   @override
   void initState() {
     super.initState();
-    _courseStore.getAllCourses();
+    _studentStore.getAllStudents();
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -38,7 +39,7 @@ class _CoursesPageState extends State<CoursesPage> {
   }
 
   void _onSearchChanged() {
-    _courseStore.searchCourses(_searchController.text);
+    // _courseStore.searchCourses(_searchController.text);
   }
 
   @override
@@ -50,7 +51,7 @@ class _CoursesPageState extends State<CoursesPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomAppBar(
-              label: "Novo curso",
+              label: "Novo aluno",
               onTap: () => Modular.to.pushNamed('/course/'),
             ),
             Expanded(
@@ -62,9 +63,9 @@ class _CoursesPageState extends State<CoursesPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        title("VR Cursos"),
+                        title("Procurar por um aluno"),
                         subtitle(
-                          "Lista de todos os cursos disponíveis na plataforma",
+                          "Lista de todos os alunos matriculados na plataforma",
                         ),
                         CustomTextField(
                           margin: EdgeInsets.only(
@@ -79,18 +80,18 @@ class _CoursesPageState extends State<CoursesPage> {
                         ),
                         Observer(
                           builder: (context) {
-                            if (_courseStore.loading) {
+                            if (_studentStore.loading) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return _courseStore.filteredCourses.isEmpty
-                                  ? const SearchWithoutResult()
-                                  : CoursesList(
-                                      label: "Abrir",
-                                      courseEntity:
-                                          _courseStore.filteredCourses,
-                                    );
+                              return
+                                  // _studentStore.filteredCourses.isEmpty
+                                  //     ? const SearchWithoutResult()
+                                  //     :
+                                  StudentsList(
+                                studentEntity: _studentStore.studentsList,
+                              );
                             }
                           },
                         ),

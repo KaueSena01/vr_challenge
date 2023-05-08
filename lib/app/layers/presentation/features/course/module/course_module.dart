@@ -39,7 +39,7 @@ class CourseModule extends Module {
     ),
     ChildRoute(
       '/courses',
-      child: (context, agrs) => CoursesPage(),
+      child: (context, agrs) => const CoursesPage(),
     ),
   ];
 }

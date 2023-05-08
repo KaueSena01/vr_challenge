@@ -32,11 +32,30 @@ abstract class _CourseStoreBase with Store {
   @observable
   String searchFilter = '';
 
+  @observable
+  List<int> selectedCourses = [];
+
   @computed
   List<CourseEntity> get filteredCourses => coursesList
       .where((course) =>
           course.name.toLowerCase().contains(searchFilter.toLowerCase()))
       .toList();
+
+  @action
+  List<int> handleCourseSelection(int courseId) {
+    loading = true;
+    if (selectedCourses.contains(courseId)) {
+      selectedCourses.remove(courseId);
+    } else if (selectedCourses.length == 3) {
+      AsukaSnackbar.warning(
+        "Um aluno não pode estar matriculado em mais de 3 cursos",
+      ).show();
+    } else if (selectedCourses.length < 3) {
+      selectedCourses.add(courseId);
+    }
+    loading = false;
+    return selectedCourses;
+  }
 
   @action
   void searchCourses(String search) {
@@ -60,6 +79,9 @@ abstract class _CourseStoreBase with Store {
         ),
       );
       Modular.to.pop();
+      AsukaSnackbar.success(
+        "O curso de $name foi adicionado com sucesso",
+      ).show();
     } catch (_) {
       AsukaSnackbar.alert(
         "Ocorreu um erro, verifique o nome do curso",
@@ -120,6 +142,9 @@ abstract class _CourseStoreBase with Store {
     try {
       await _deleteCourseUseCase.call(id);
       Modular.to.pop();
+      AsukaSnackbar.alert(
+        "O curso foi removido",
+      ).show();
     } catch (_) {
       AsukaSnackbar.alert(
         "Ocorreu um erro, verifique o nome do curso",

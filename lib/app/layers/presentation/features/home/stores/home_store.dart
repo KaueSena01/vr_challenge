@@ -26,11 +26,12 @@ abstract class _HomeStoreBase with Store {
         );
         break;
       case 2:
-        print("navegar para tela 3");
         showBottomSheetModal(buildContext!);
         break;
       case 3:
-        print("navegar para tela 4");
+        Modular.to.pushNamed(
+          '/student/students',
+        );
         break;
       case 4:
         print("navegar para tela 5");

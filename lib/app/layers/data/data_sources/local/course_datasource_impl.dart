@@ -30,7 +30,7 @@ class CourseDataSourceImpl extends CourseDataSource {
     final course = CourseService(database: db);
 
     try {
-      return course.getAllCourses();
+      return await course.getAllCourses();
     } catch (_) {
       log(_.toString());
       rethrow;

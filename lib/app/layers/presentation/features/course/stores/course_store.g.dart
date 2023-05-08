@@ -65,6 +65,22 @@ mixin _$CourseStore on _CourseStoreBase, Store {
     });
   }
 
+  late final _$selectedCoursesAtom =
+      Atom(name: '_CourseStoreBase.selectedCourses', context: context);
+
+  @override
+  List<int> get selectedCourses {
+    _$selectedCoursesAtom.reportRead();
+    return super.selectedCourses;
+  }
+
+  @override
+  set selectedCourses(List<int> value) {
+    _$selectedCoursesAtom.reportWrite(value, super.selectedCourses, () {
+      super.selectedCourses = value;
+    });
+  }
+
   late final _$createCourseAsyncAction =
       AsyncAction('_CourseStoreBase.createCourse', context: context);
 
@@ -104,6 +120,17 @@ mixin _$CourseStore on _CourseStoreBase, Store {
       ActionController(name: '_CourseStoreBase', context: context);
 
   @override
+  List<int> handleCourseSelection(int courseId) {
+    final _$actionInfo = _$_CourseStoreBaseActionController.startAction(
+        name: '_CourseStoreBase.handleCourseSelection');
+    try {
+      return super.handleCourseSelection(courseId);
+    } finally {
+      _$_CourseStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void searchCourses(String search) {
     final _$actionInfo = _$_CourseStoreBaseActionController.startAction(
         name: '_CourseStoreBase.searchCourses');
@@ -120,6 +147,7 @@ mixin _$CourseStore on _CourseStoreBase, Store {
 loading: ${loading},
 coursesList: ${coursesList},
 searchFilter: ${searchFilter},
+selectedCourses: ${selectedCourses},
 filteredCourses: ${filteredCourses}
     ''';
   }

@@ -43,6 +43,14 @@ class DatabaseProvider {
             syllabus TEXT
           )
           ''');
+    await db.execute('''
+          CREATE TABLE student (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            email TEXT,
+            password TEXT
+          )
+          ''');
 
     await db.insert(
       'admin',

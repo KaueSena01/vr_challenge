@@ -9,10 +9,12 @@ class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
     super.key,
     this.label,
+    this.labelColor,
     this.onTap,
   });
 
   final String? label;
+  final Color? labelColor;
   final void Function()? onTap;
 
   @override
@@ -45,7 +47,7 @@ class CustomAppBar extends StatelessWidget {
             child: Text(
               label ?? "",
               style: AppTextStyles.textTheme.labelMedium!.apply(
-                color: AppColors.tertiaryColor,
+                color: labelColor ?? AppColors.tertiaryColor,
               ),
             ),
           )
