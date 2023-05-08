@@ -5,35 +5,36 @@ import 'package:vr_challenge/app/layers/domain/use_cases/create_course_use_case.
 import 'package:vr_challenge/app/layers/domain/use_cases/delete_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_all_courses_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_use_case.dart';
-import 'package:vr_challenge/app/layers/presentation/features/course/module/course_module.dart';
+import 'package:vr_challenge/app/layers/presentation/features/course/pages/course_page.dart';
+import 'package:vr_challenge/app/layers/presentation/features/course/pages/create_course_page.dart';
+import 'package:vr_challenge/app/layers/presentation/features/course/pages/update_course_page.dart';
 import 'package:vr_challenge/app/layers/presentation/features/course/stores/course_store.dart';
-import 'package:vr_challenge/app/layers/presentation/features/home/pages/home_page.dart';
-import 'package:vr_challenge/app/layers/presentation/features/home/stores/home_store.dart';
 
-class HomeModule extends Module {
+class CourseModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind((i) => HomeStore()),
     Bind((i) => CreateCourseUseCase(courseRepository: i.get())),
+    Bind((i) => GetAllCoursesUseCase(courseRepository: i.get())),
+    Bind((i) => UpdateCourseUseCase(courseRepository: i.get())),
+    Bind((i) => DeleteCourseUseCase(courseRepository: i.get())),
     Bind((i) => CourseRepositoryImpl(courseDataSource: i.get())),
     Bind((i) => CourseDataSourceImpl()),
-    Bind.lazySingleton((i) => CourseStore(i.get(), i.get(), i.get(), i.get())),
-    Bind.lazySingleton((i) => GetAllCoursesUseCase(courseRepository: i.get())),
-    Bind.lazySingleton((i) => UpdateCourseUseCase(courseRepository: i.get())),
-    Bind.lazySingleton((i) => DeleteCourseUseCase(courseRepository: i.get())),
-    Bind.lazySingleton((i) => CourseRepositoryImpl(courseDataSource: i.get())),
-    Bind.lazySingleton((i) => CourseDataSourceImpl()),
+    Bind((i) => CourseStore(i.get(), i.get(), i.get(), i.get())),
   ];
 
   @override
   final List<ModularRoute> routes = [
     ChildRoute(
       '/',
-      child: (context, agrs) => HomePage(adminEntity: agrs.data),
+      child: (context, agrs) => CreateCoursePage(),
     ),
-    ModuleRoute(
+    ChildRoute(
       '/course',
-      module: CourseModule(),
+      child: (context, agrs) => CoursePage(courseEntity: agrs.data),
+    ),
+    ChildRoute(
+      '/update',
+      child: (context, agrs) => UpdateCoursePage(courseEntity: agrs.data),
     ),
   ];
 }

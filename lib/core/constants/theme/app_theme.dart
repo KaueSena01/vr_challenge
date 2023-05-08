@@ -25,6 +25,7 @@ abstract class AppTheme {
     textTheme: AppTextStyles.textTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.tertiaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(BorderRadiusSize.borderRadiusSmall),
@@ -35,7 +36,7 @@ abstract class AppTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.whiteColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(BorderRadiusSize.borderRadiusSmall),
@@ -43,7 +44,7 @@ abstract class AppTheme {
         ),
         side: BorderSide(
           width: BorderSize.borderSizeSmall,
-          color: AppColors.primaryColor,
+          color: AppColors.tertiaryColor,
           style: BorderStyle.solid,
         ),
       ),
@@ -58,34 +59,37 @@ abstract class AppTheme {
       margin: EdgeInsets.all(0),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      // isDense: true,
+      isDense: true,
       filled: true,
       fillColor: AppColors.quaternaryColor,
+      floatingLabelBehavior: FloatingLabelBehavior.always,
+
+      labelStyle: AppTextStyles.textTheme.headlineSmall!.apply(
+        color: AppColors.whiteColor,
+      ),
+
+      hintStyle: AppTextStyles.textTheme.labelSmall!.apply(
+        color: AppColors.labelColor,
+      ),
+
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(
-          color: Colors.lightBlueAccent,
+        borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
+        borderSide: BorderSide(
+          color: AppColors.whiteColor,
           width: 1,
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(
-          color: Colors.lightBlueAccent,
+        borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
+        borderSide: BorderSide(
+          color: AppColors.whiteColor,
           width: 1,
         ),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(
-          color: Colors.lightBlueAccent,
-          width: 1,
-        ),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-        borderSide: const BorderSide(
-          color: Colors.lightBlueAccent,
+        borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
+        borderSide: BorderSide(
+          color: AppColors.whiteColor,
           width: 1,
         ),
       ),

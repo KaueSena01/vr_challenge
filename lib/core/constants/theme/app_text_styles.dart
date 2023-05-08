@@ -5,17 +5,17 @@ abstract class AppTextStyles {
   static TextTheme textTheme = TextTheme(
     // display
     displayLarge: TextStyle(
-      fontSize: FontSize.fontSize28,
+      fontSize: FontSize.fontSize32,
       fontWeight: FontWeight.w700,
       fontFamily: 'Inter',
     ),
     displayMedium: TextStyle(
-      fontSize: FontSize.fontSize28,
+      fontSize: FontSize.fontSize32,
       fontWeight: FontWeight.w500,
       fontFamily: 'Inter',
     ),
     displaySmall: TextStyle(
-      fontSize: FontSize.fontSize28,
+      fontSize: FontSize.fontSize32,
       fontWeight: FontWeight.w400,
       fontFamily: 'Inter',
     ),

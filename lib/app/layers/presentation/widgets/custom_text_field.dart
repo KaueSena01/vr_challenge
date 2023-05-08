@@ -11,10 +11,11 @@ class CustomTextField extends StatefulWidget {
   final Color? hintTextColor;
   final Color? inputTextColor;
   final IconData? icon;
+  final int minLines;
   final int maxLines;
   final bool isSecret;
   final bool readOnly;
-  final bool darkBorder;
+  final bool isInputForm;
   final List<TextInputFormatter>? inputFormatters;
   final String? initialValue;
   final String? Function(String?)? validator;
@@ -23,6 +24,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType? textInputType;
   final GlobalKey<FormFieldState>? formFieldKey;
   final EdgeInsets? margin;
+  final Widget? prefixIcon;
 
   const CustomTextField({
     Key? key,
@@ -33,10 +35,11 @@ class CustomTextField extends StatefulWidget {
     this.inputTextColor,
     this.initialValue,
     this.icon,
+    this.minLines = 1,
     this.maxLines = 1,
     this.isSecret = false,
     this.readOnly = false,
-    this.darkBorder = false,
+    this.isInputForm = false,
     this.inputFormatters,
     this.textInputType,
     this.controller,
@@ -44,6 +47,7 @@ class CustomTextField extends StatefulWidget {
     this.onSaved,
     this.formFieldKey,
     this.margin,
+    this.prefixIcon,
   }) : super(key: key);
 
   @override
@@ -72,6 +76,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         validator: widget.validator,
         onSaved: widget.onSaved,
         keyboardType: widget.textInputType,
+        minLines: widget.minLines,
         maxLines: widget.maxLines,
         style: AppTextStyles.textTheme.labelSmall!.apply(
           color: widget.inputTextColor ?? AppColors.primaryColor,
@@ -80,40 +85,48 @@ class _CustomTextFieldState extends State<CustomTextField> {
           filled: true,
           isDense: true,
           fillColor: AppColors.whiteColor,
+          contentPadding: widget.isInputForm
+              ? EdgeInsets.fromLTRB(
+                  AppSizes.size00,
+                  AppSizes.size15,
+                  AppSizes.size00,
+                  AppSizes.size15,
+                )
+              : null,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: widget.labelText,
-          labelStyle: AppTextStyles.textTheme.headlineSmall!.apply(
+          labelStyle: AppTextStyles.textTheme.bodySmall!.apply(
             color: widget.labelTextColor ?? AppColors.whiteColor,
           ),
           hintText: widget.hintText,
           hintStyle: AppTextStyles.textTheme.labelSmall!.apply(
             color: widget.hintTextColor ?? AppColors.labelColor,
           ),
-          prefixIcon: Icon(Icons.search, size: AppSizes.size25),
-          border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
-            borderSide: BorderSide(
-              color: AppColors.whiteColor,
-              width: 1,
-            ),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
-            borderSide: BorderSide(
-              color: AppColors.whiteColor,
-              width: 1,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
-            borderSide: BorderSide(
-              color: AppColors.whiteColor,
-              width: 1,
-            ),
-          ),
+          prefixIcon: widget.prefixIcon,
+          border: widget.isInputForm
+              ? UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.courseLabelColor,
+                    width: BorderSize.borderSizeSmall,
+                  ),
+                )
+              : null,
+          focusedBorder: widget.isInputForm
+              ? UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.courseLabelColor,
+                    width: BorderSize.borderSizeSmall,
+                  ),
+                )
+              : null,
+          enabledBorder: widget.isInputForm
+              ? UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.courseLabelColor,
+                    width: BorderSize.borderSizeSmall,
+                  ),
+                )
+              : null,
         ),
       ),
     );

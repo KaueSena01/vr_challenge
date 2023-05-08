@@ -26,12 +26,4 @@ class AdminDTO extends AdminEntity {
       password: map['password'] ?? '',
     );
   }
-
-  // factory AdminDTO.fromEntity(AdminEntity entity) {
-  //   return AdminDTO(
-  //     name: entity.name,
-  //     email: entity.email,
-  //     password: entity.password,
-  //   );
-  // }
 }

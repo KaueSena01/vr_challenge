@@ -108,6 +108,7 @@ class LoginPage extends StatelessWidget {
                             )
                           : CustomElevatedButton(
                               label: "Entrar",
+                              backgroundColor: AppColors.primaryColor,
                               onPressed: () async {
                                 FocusScope.of(context).unfocus();
 

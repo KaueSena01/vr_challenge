@@ -45,3 +45,34 @@ String? passwordValidator(password) {
 
   return null;
 }
+
+String? courseNameValidator(name) {
+  if (name == null || name.isEmpty) {
+    return "Digite o nome do curso";
+  }
+  return null;
+}
+
+String? courseDescriptionValidator(description) {
+  if (description == null || description.isEmpty) {
+    return "Digite a descrição do curso";
+  }
+
+  if (description.length <= 20) {
+    return "Descrição curta";
+  }
+
+  return null;
+}
+
+String? courseSyllabusValidator(syllabus) {
+  if (syllabus == null || syllabus.isEmpty) {
+    return "Digite a ementa do curso";
+  }
+
+  if (syllabus.length <= 20) {
+    return "Ementa inválida";
+  }
+
+  return null;
+}

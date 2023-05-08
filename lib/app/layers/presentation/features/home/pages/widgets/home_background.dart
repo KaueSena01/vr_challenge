@@ -8,8 +8,8 @@ import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
 import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
 import 'package:vr_challenge/core/utils/name_formart.dart';
 
-class HomeBackground extends StatelessWidget {
-  const HomeBackground({
+class HomeBackgroundCard extends StatelessWidget {
+  const HomeBackgroundCard({
     super.key,
     required this.adminEntity,
   });
@@ -23,7 +23,7 @@ class HomeBackground extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(
         AppSizes.size15,
-        AppSizes.size60,
+        AppSizes.size70,
         AppSizes.size15,
         AppSizes.size15,
       ),
@@ -75,8 +75,9 @@ class HomeBackground extends StatelessWidget {
             ],
           ),
           CustomSpace(height: AppSizes.size40),
-          const CustomTextField(
+          CustomTextField(
             hintText: "Pesquisar por...",
+            prefixIcon: Icon(Icons.search, size: AppSizes.size25),
           ),
         ],
       ),
