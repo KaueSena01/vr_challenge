@@ -21,3 +21,19 @@ instancia database no module
 pesquisar sobre computed
 ajustar background do scaffold
 tabelas no plural
+
+O que falta:
+AlUNO:
+
+- Adicionar os alunos ao curso na tela de matricula
+  - Ao adicionar, deve contabilizar quantos alunos já estão matriculados e deve
+    impedir para não ser maior que 10
+- Ao remover o curso também deve ser removido do array dos estudantes
+- Pesquisar aluno
+  pegar o id de cada aluno em um array [1, 2, 3]
+  pegar o id do curso 1
+
+atualizar no banco aluno 1 - curso [0, 1]
+aluno 2 - curso [1]
+
+remover formkey
