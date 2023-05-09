@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:vr_challenge/app/layers/domain/entities/course_entity.dart';
-import 'package:vr_challenge/app/layers/presentation/features/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
 import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
@@ -65,7 +64,7 @@ class CoursesList extends StatelessWidget {
                           onTap: onCourseSelected != null
                               ? () => onCourseSelected!(course.id!)
                               : () => Modular.to.pushNamed(
-                                    '/course/course',
+                                    '/enrollment/course/course',
                                     arguments: course,
                                   ),
                           child: Text(

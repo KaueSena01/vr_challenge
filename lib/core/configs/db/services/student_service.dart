@@ -6,13 +6,20 @@ class StudentService {
 
   StudentService({required this.database});
 
-  Future<void> insertStudent(StudentDTO studentDTO) async {
+  Future<StudentDTO> insertStudent(StudentDTO studentDTO) async {
     try {
-      await database.insert(
+      final id = await database.insert(
         'student',
         studentDTO.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
+      final studentMap = await database.query(
+        'student',
+        where: 'id = ?',
+        whereArgs: [id],
+      );
+      final student = StudentDTO.fromMap(studentMap.first);
+      return student;
     } catch (_) {
       throw "Ocorreu um erro";
     }
@@ -56,5 +63,24 @@ class StudentService {
     } catch (_) {
       throw "Ocorreu um erro";
     }
+  }
+
+  Future<List<StudentDTO>> getStudentsByIds(List<int> ids) async {
+    final List<Map<String, dynamic>> maps = await database.query(
+      'student',
+      where: 'id IN (${ids.map((id) => '?').join(',')})',
+      whereArgs: ids,
+    );
+    return List.generate(
+      maps.length,
+      (i) {
+        return StudentDTO(
+          id: maps[i]['id'],
+          name: maps[i]['name'],
+          email: maps[i]['email'],
+          password: maps[i]['password'],
+        );
+      },
+    );
   }
 }

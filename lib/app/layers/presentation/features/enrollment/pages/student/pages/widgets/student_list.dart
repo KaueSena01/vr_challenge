@@ -17,7 +17,7 @@ class StudentsList extends StatelessWidget {
 
   final List<StudentEntity> studentEntity;
   final String? label;
-  final void Function(int courseId)? onStudentSelected;
+  final void Function(int studentId)? onStudentSelected;
   final List<int>? selectedStudents;
 
   @override
@@ -36,9 +36,10 @@ class StudentsList extends StatelessWidget {
               itemCount: studentEntity.length,
               padding: EdgeInsets.all(AppSizes.size00),
               itemBuilder: (_, index) {
-                final course = studentEntity[index];
-                // final isSelected = selectedCourses?.contains(course.id) ?? false;
-                // final toggle = isSelected ? "Remover" : "Adicionar";
+                final student = studentEntity[index];
+                final isSelected =
+                    selectedStudents?.contains(student.id) ?? false;
+                final toggle = isSelected ? "Remover" : "Adicionar";
                 return Column(
                   children: [
                     if (index > 0)
@@ -52,26 +53,24 @@ class StudentsList extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          course.name,
+                          student.name,
                           style: AppTextStyles.textTheme.labelSmall!.apply(
                             color: AppColors.courseLabelColor,
                           ),
                         ),
                         GestureDetector(
                           onTap: onStudentSelected != null
-                              ? () => onStudentSelected!(course.id!)
+                              ? () => onStudentSelected!(student.id!)
                               : () => Modular.to.pushNamed(
                                     'update',
-                                    arguments: course,
+                                    arguments: student,
                                   ),
                           child: Text(
                             label ?? "Editar",
                             style: AppTextStyles.textTheme.labelMedium!.apply(
-                              color:
-                                  // toggle == "Remover"
-                                  //     ? AppColors.dangerColor
-                                  //     :
-                                  AppColors.tertiaryColor,
+                              color: toggle == "Remover"
+                                  ? AppColors.dangerColor
+                                  : AppColors.tertiaryColor,
                             ),
                           ),
                         ),

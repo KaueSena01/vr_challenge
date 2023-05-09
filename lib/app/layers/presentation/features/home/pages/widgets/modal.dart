@@ -34,7 +34,7 @@ void showBottomSheetModal(BuildContext context) {
               ),
               onTap: () {
                 Modular.to.pop();
-                Modular.to.pushNamed('/course');
+                Modular.to.pushNamed('/enrollment/course');
               },
             ),
             ListTile(
@@ -50,7 +50,7 @@ void showBottomSheetModal(BuildContext context) {
               ),
               onTap: () {
                 Modular.to.pop();
-                Modular.to.pushNamed('/student');
+                Modular.to.pushNamed('/enrollment/student');
               },
             ),
           ],

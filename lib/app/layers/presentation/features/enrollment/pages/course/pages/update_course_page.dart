@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:vr_challenge/app/layers/domain/entities/course_entity.dart';
-import 'package:vr_challenge/app/layers/presentation/features/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';

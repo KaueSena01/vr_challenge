@@ -11,13 +11,13 @@ class StudentDataSourceImpl extends StudentDataSource {
   late Database db;
 
   @override
-  Future<void> createNewStudent(StudentEntity studentEntity) async {
+  Future<StudentEntity> createNewStudent(StudentEntity studentEntity) async {
     db = await DatabaseProvider.instance.database;
     final student = StudentService(database: db);
     final studentDTO = StudentDTO.fromEntity(studentEntity);
 
     try {
-      await student.insertStudent(studentDTO);
+      return await student.insertStudent(studentDTO);
     } catch (_) {
       log(_.toString());
       rethrow;
@@ -54,10 +54,23 @@ class StudentDataSourceImpl extends StudentDataSource {
   @override
   Future<void> deleteStudent(int studentCode) async {
     db = await DatabaseProvider.instance.database;
-    final course = StudentService(database: db);
+    final studentService = StudentService(database: db);
 
     try {
-      await course.deleteStudent(studentCode);
+      await studentService.deleteStudent(studentCode);
+    } catch (_) {
+      log(_.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<StudentEntity>> getStudentsByIds(List<int> studentCode) async {
+    db = await DatabaseProvider.instance.database;
+    final studentService = StudentService(database: db);
+
+    try {
+      return await studentService.getStudentsByIds(studentCode);
     } catch (_) {
       log(_.toString());
       rethrow;

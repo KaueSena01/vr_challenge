@@ -86,7 +86,7 @@ class Courses extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () => Modular.to.pushNamed(
-                                  '/course/course',
+                                  '/enrollment/course/course',
                                   arguments: course,
                                 ),
                               ),

@@ -8,8 +8,8 @@ class StudentRepositoryImpl implements StudentRepository {
   StudentRepositoryImpl({required this.studentDataSource});
 
   @override
-  Future<void> createNewStudent(StudentEntity studentEntity) async {
-    await studentDataSource.createNewStudent(studentEntity);
+  Future<StudentEntity> createNewStudent(StudentEntity studentEntity) async {
+    return await studentDataSource.createNewStudent(studentEntity);
   }
 
   @override
@@ -25,5 +25,10 @@ class StudentRepositoryImpl implements StudentRepository {
   @override
   Future<void> deleteStudent(int studentCode) async {
     await studentDataSource.deleteStudent(studentCode);
+  }
+
+  @override
+  Future<List<StudentEntity>> getStudentsByIds(List<int> studentCode) async {
+    return await studentDataSource.getStudentsByIds(studentCode);
   }
 }

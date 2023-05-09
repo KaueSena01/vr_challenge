@@ -25,6 +25,23 @@ mixin _$StudentStore on _StudentStoreBase, Store {
     });
   }
 
+  late final _$studentsListNoEnrollmentAtom = Atom(
+      name: '_StudentStoreBase.studentsListNoEnrollment', context: context);
+
+  @override
+  List<StudentEntity> get studentsListNoEnrollment {
+    _$studentsListNoEnrollmentAtom.reportRead();
+    return super.studentsListNoEnrollment;
+  }
+
+  @override
+  set studentsListNoEnrollment(List<StudentEntity> value) {
+    _$studentsListNoEnrollmentAtom
+        .reportWrite(value, super.studentsListNoEnrollment, () {
+      super.studentsListNoEnrollment = value;
+    });
+  }
+
   late final _$studentsListAtom =
       Atom(name: '_StudentStoreBase.studentsList', context: context);
 
@@ -41,13 +58,30 @@ mixin _$StudentStore on _StudentStoreBase, Store {
     });
   }
 
+  late final _$selectedStudentsAtom =
+      Atom(name: '_StudentStoreBase.selectedStudents', context: context);
+
+  @override
+  List<int> get selectedStudents {
+    _$selectedStudentsAtom.reportRead();
+    return super.selectedStudents;
+  }
+
+  @override
+  set selectedStudents(List<int> value) {
+    _$selectedStudentsAtom.reportWrite(value, super.selectedStudents, () {
+      super.selectedStudents = value;
+    });
+  }
+
   late final _$createNewStudentAsyncAction =
       AsyncAction('_StudentStoreBase.createNewStudent', context: context);
 
   @override
-  Future<void> createNewStudent(String name, String email, String password) {
+  Future<void> createNewStudent(
+      String name, String email, String password, List<int> courseCode) {
     return _$createNewStudentAsyncAction
-        .run(() => super.createNewStudent(name, email, password));
+        .run(() => super.createNewStudent(name, email, password, courseCode));
   }
 
   late final _$getAllStudentsAsyncAction =
@@ -56,6 +90,15 @@ mixin _$StudentStore on _StudentStoreBase, Store {
   @override
   Future<void> getAllStudents() {
     return _$getAllStudentsAsyncAction.run(() => super.getAllStudents());
+  }
+
+  late final _$getAllStudentsByIdsAsyncAction =
+      AsyncAction('_StudentStoreBase.getAllStudentsByIds', context: context);
+
+  @override
+  Future<void> getAllStudentsByIds() {
+    return _$getAllStudentsByIdsAsyncAction
+        .run(() => super.getAllStudentsByIds());
   }
 
   late final _$updateStudentAsyncAction =
@@ -76,11 +119,27 @@ mixin _$StudentStore on _StudentStoreBase, Store {
     return _$deleteCourseAsyncAction.run(() => super.deleteCourse(id));
   }
 
+  late final _$_StudentStoreBaseActionController =
+      ActionController(name: '_StudentStoreBase', context: context);
+
+  @override
+  List<int> handleCourseSelection(int courseId) {
+    final _$actionInfo = _$_StudentStoreBaseActionController.startAction(
+        name: '_StudentStoreBase.handleCourseSelection');
+    try {
+      return super.handleCourseSelection(courseId);
+    } finally {
+      _$_StudentStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 loading: ${loading},
-studentsList: ${studentsList}
+studentsListNoEnrollment: ${studentsListNoEnrollment},
+studentsList: ${studentsList},
+selectedStudents: ${selectedStudents}
     ''';
   }
 }

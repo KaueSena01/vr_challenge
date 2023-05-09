@@ -6,7 +6,7 @@ class CreateNewStudentUseCase {
 
   CreateNewStudentUseCase({required this.studentRepository});
 
-  Future<void> call(StudentEntity studentEntity) async {
-    await studentRepository.createNewStudent(studentEntity);
+  Future<StudentEntity> call(StudentEntity studentEntity) async {
+    return await studentRepository.createNewStudent(studentEntity);
   }
 }

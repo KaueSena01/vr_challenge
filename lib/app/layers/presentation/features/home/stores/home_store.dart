@@ -22,7 +22,7 @@ abstract class _HomeStoreBase with Store {
         break;
       case 1:
         Modular.to.pushNamed(
-          '/course/courses',
+          '/enrollment/course/courses',
         );
         break;
       case 2:
@@ -30,7 +30,7 @@ abstract class _HomeStoreBase with Store {
         break;
       case 3:
         Modular.to.pushNamed(
-          '/student/students',
+          '/enrollment/student/students',
         );
         break;
       case 4:
