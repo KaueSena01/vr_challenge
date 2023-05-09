@@ -77,10 +77,12 @@ class _CoursePageState extends State<CoursePage> {
                 AppSizes.size05,
               ),
               label: "Matricular alunos",
-              onPressed: () => Modular.to.pushNamed(
-                '/enrollment/student/enrollment',
-                arguments: widget.courseEntity,
-              ),
+              onPressed: enrollmentStore.count < 10
+                  ? () => Modular.to.pushNamed(
+                        '/enrollment/student/enrollment',
+                        arguments: widget.courseEntity,
+                      )
+                  : null,
             ),
             CustomOutlinedButton(
               margin: EdgeInsets.all(AppSizes.size15),

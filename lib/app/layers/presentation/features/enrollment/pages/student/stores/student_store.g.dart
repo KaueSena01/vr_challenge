@@ -123,11 +123,11 @@ mixin _$StudentStore on _StudentStoreBase, Store {
       ActionController(name: '_StudentStoreBase', context: context);
 
   @override
-  List<int> handleCourseSelection(int courseId) {
+  List<int> handleStudentSelection(int studentCode) {
     final _$actionInfo = _$_StudentStoreBaseActionController.startAction(
-        name: '_StudentStoreBase.handleCourseSelection');
+        name: '_StudentStoreBase.handleStudentSelection');
     try {
-      return super.handleCourseSelection(courseId);
+      return super.handleStudentSelection(studentCode);
     } finally {
       _$_StudentStoreBaseActionController.endAction(_$actionInfo);
     }

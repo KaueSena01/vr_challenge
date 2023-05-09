@@ -16,6 +16,7 @@ import 'package:vr_challenge/app/layers/domain/use_cases/get_quantity_of_student
 import 'package:vr_challenge/app/layers/domain/use_cases/get_students_by_ids_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_students_not_enrolled_for_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/save_student_and_course_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/update_course_students_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_student_use_case.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/module/course_module.dart';
@@ -56,11 +57,13 @@ class EnrollmentModule extends Module {
     Bind.lazySingleton((i) =>
         GetStudentsNotEnrolledForCourseUseCase(enrollmentRepository: i.get())),
     Bind.lazySingleton(
+        (i) => UpdateCourseStudentsUseCase(enrollmentRepository: i.get())),
+    Bind.lazySingleton(
         (i) => GetEnrolledCoursesCountUseCase(enrollmentRepository: i.get())),
     Bind.lazySingleton((i) =>
         GetEnrolledStudentsForCourseUseCase(enrollmentRepository: i.get())),
     Bind.lazySingleton(
-        (i) => EnrollmentStore(i.get(), i.get(), i.get(), i.get())),
+        (i) => EnrollmentStore(i.get(), i.get(), i.get(), i.get(), i.get())),
   ];
 
   @override

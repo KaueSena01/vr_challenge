@@ -62,4 +62,20 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
       rethrow;
     }
   }
+
+  @override
+  Future<void> updateCourseStudents(
+    List<int> studentCode,
+    int courseCode,
+  ) async {
+    db = await DatabaseProvider.instance.database;
+    final enrollment = EnrollmentService(database: db);
+
+    try {
+      await enrollment.addCourseToStudents(studentCode, courseCode);
+    } catch (_) {
+      log(_.toString());
+      rethrow;
+    }
+  }
 }

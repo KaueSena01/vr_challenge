@@ -66,7 +66,7 @@ class StudentsList extends StatelessWidget {
                                     arguments: student,
                                   ),
                           child: Text(
-                            label ?? "Editar",
+                            label ?? toggle,
                             style: AppTextStyles.textTheme.labelMedium!.apply(
                               color: toggle == "Remover"
                                   ? AppColors.dangerColor

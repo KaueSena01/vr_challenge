@@ -19,6 +19,7 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(enrollmentStore.count);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

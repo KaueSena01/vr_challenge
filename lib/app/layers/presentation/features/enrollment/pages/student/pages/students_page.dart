@@ -90,6 +90,7 @@ class _StudentsPageState extends State<StudentsPage> {
                                   //     ? const SearchWithoutResult()
                                   //     :
                                   StudentsList(
+                                label: "Editar",
                                 studentEntity: _studentStore.studentsList,
                               );
                             }

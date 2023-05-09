@@ -7,11 +7,13 @@ import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/s
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
+import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_subtitle.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_title.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
 import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
+import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
 
 class EnrollmentPage extends StatefulWidget {
   const EnrollmentPage({
@@ -36,10 +38,15 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
   @override
   void initState() {
     super.initState();
-    _enrollmentStore.getStudentsNotEnrolledForCourse(widget.courseEntity.id!);
-    _studentStore.getAllStudentsByIds();
-    // _enrollmentStore.getStudentsEnrolledForCourse(widget.courseEntity.id!);
+    _getStudentsNotEnrolled().then(
+      (value) => _studentStore.getAllStudentsByIds(),
+    );
     _searchController.addListener(_onSearchChanged);
+  }
+
+  Future<void> _getStudentsNotEnrolled() async {
+    await _enrollmentStore
+        .getStudentsNotEnrolledForCourse(widget.courseEntity.id!);
   }
 
   @override
@@ -52,8 +59,8 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
     // _courseStore.searchCourses(_searchController.text);
   }
 
-  void handleCourseSelection(int studentId) {
-    _studentStore.handleCourseSelection(studentId);
+  void handleStudentSelection(int studentId) {
+    _studentStore.handleStudentSelection(studentId);
   }
 
   @override
@@ -96,17 +103,34 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return
-                                  // _studentStore.filteredCourses.isEmpty
-                                  //     ? const SearchWithoutResult()
-                                  //     :
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    "Quantidade",
+                                    style: AppTextStyles.textTheme.labelSmall!
+                                        .apply(
+                                      color: AppColors.tertiaryColor,
+                                    ),
+                                  ),
+                                  CustomSpace(height: AppSizes.size05),
+                                  Text(
+                                    "${_enrollmentStore.enrollmentCount}/10",
+                                    style: AppTextStyles.textTheme.labelSmall!
+                                        .apply(
+                                      color: AppColors.subtitileColor,
+                                    ),
+                                  ),
+                                  CustomSpace(height: AppSizes.size35),
                                   StudentsList(
-                                label: "Adicionar",
-                                studentEntity: _studentStore.studentsList,
-                                onStudentSelected: (studentId) =>
-                                    handleCourseSelection(studentId),
-                                selectedStudents:
-                                    _studentStore.selectedStudents,
+                                    studentEntity:
+                                        _studentStore.studentsListNoEnrollment,
+                                    onStudentSelected: (studentId) =>
+                                        handleStudentSelection(studentId),
+                                    selectedStudents:
+                                        _studentStore.selectedStudents,
+                                  ),
+                                ],
                               );
                             }
                           },
@@ -126,7 +150,10 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
               onPressed: () async {
                 FocusScope.of(context).unfocus();
 
-                if (_formKey.currentState!.validate()) {}
+                _enrollmentStore.updateCourseStudents(
+                  _studentStore.selectedStudents,
+                  widget.courseEntity.id!,
+                );
               },
             ),
           ],

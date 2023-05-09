@@ -5,4 +5,5 @@ abstract class EnrollmentDataSource {
   Future<int> getEnrolledCoursesCount(int courseCode);
   Future<List<int>> getStudentsNotEnrolledForCourse(int courseCode);
   Future<List<int>> getEnrolledStudentsForCourse(int courseCode);
+  Future<void> updateCourseStudents(List<int> studentCode, int courseCode);
 }

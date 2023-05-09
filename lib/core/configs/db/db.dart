@@ -55,8 +55,8 @@ class DatabaseProvider {
     await db.execute('''
           CREATE TABLE enrollment (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            courseCode INTEGER,
-            studentCode INTEGER
+            studentCode INTEGER,
+            courseCodes BLOB
           )
           ''');
 

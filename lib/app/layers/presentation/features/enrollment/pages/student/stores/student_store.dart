@@ -42,16 +42,18 @@ abstract class _StudentStoreBase with Store {
   List<int> selectedStudents = [];
 
   @action
-  List<int> handleCourseSelection(int courseId) {
+  List<int> handleStudentSelection(int studentCode) {
     loading = true;
-    if (selectedStudents.contains(courseId)) {
-      selectedStudents.remove(courseId);
+    if (selectedStudents.contains(studentCode)) {
+      selectedStudents.remove(studentCode);
+      enrollmentStore.updateEnrollmentCount(-1);
     } else if (selectedStudents.length == (10 - enrollmentStore.count)) {
       AsukaSnackbar.warning(
-        "Um aluno não pode estar matriculado em mais de 3 cursos",
+        "O curso atingiu o número máximo de matriculas",
       ).show();
     } else if (selectedStudents.length < 10) {
-      selectedStudents.add(courseId);
+      selectedStudents.add(studentCode);
+      enrollmentStore.updateEnrollmentCount(1);
     }
     loading = false;
     return selectedStudents;

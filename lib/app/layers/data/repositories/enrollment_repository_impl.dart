@@ -27,4 +27,10 @@ class EnrollmentRepositoryImpl implements EnrollmentRepository {
   Future<List<int>> getEnrolledStudentsForCourse(int courseCode) async {
     return await enrollmentDataSource.getEnrolledStudentsForCourse(courseCode);
   }
+
+  @override
+  Future<void> updateCourseStudents(
+      List<int> studentCode, int courseCode) async {
+    await enrollmentDataSource.updateCourseStudents(studentCode, courseCode);
+  }
 }

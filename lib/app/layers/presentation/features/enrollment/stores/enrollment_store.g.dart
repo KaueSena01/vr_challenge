@@ -41,6 +41,22 @@ mixin _$EnrollmentStore on _EnrollmentStoreBase, Store {
     });
   }
 
+  late final _$enrollmentCountAtom =
+      Atom(name: '_EnrollmentStoreBase.enrollmentCount', context: context);
+
+  @override
+  int get enrollmentCount {
+    _$enrollmentCountAtom.reportRead();
+    return super.enrollmentCount;
+  }
+
+  @override
+  set enrollmentCount(int value) {
+    _$enrollmentCountAtom.reportWrite(value, super.enrollmentCount, () {
+      super.enrollmentCount = value;
+    });
+  }
+
   late final _$studentsNotEnrolledAtom =
       Atom(name: '_EnrollmentStoreBase.studentsNotEnrolled', context: context);
 
@@ -113,11 +129,36 @@ mixin _$EnrollmentStore on _EnrollmentStoreBase, Store {
         .run(() => super.getStudentsEnrolledForCourse(courseCode));
   }
 
+  late final _$updateCourseStudentsAsyncAction = AsyncAction(
+      '_EnrollmentStoreBase.updateCourseStudents',
+      context: context);
+
+  @override
+  Future<void> updateCourseStudents(List<int> studentCode, int courseCode) {
+    return _$updateCourseStudentsAsyncAction
+        .run(() => super.updateCourseStudents(studentCode, courseCode));
+  }
+
+  late final _$_EnrollmentStoreBaseActionController =
+      ActionController(name: '_EnrollmentStoreBase', context: context);
+
+  @override
+  void updateEnrollmentCount(int updateCount) {
+    final _$actionInfo = _$_EnrollmentStoreBaseActionController.startAction(
+        name: '_EnrollmentStoreBase.updateEnrollmentCount');
+    try {
+      return super.updateEnrollmentCount(updateCount);
+    } finally {
+      _$_EnrollmentStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
 loading: ${loading},
 count: ${count},
+enrollmentCount: ${enrollmentCount},
 studentsNotEnrolled: ${studentsNotEnrolled},
 studentsEnrolled: ${studentsEnrolled}
     ''';
