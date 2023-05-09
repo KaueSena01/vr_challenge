@@ -48,8 +48,8 @@ class LoginPage extends StatelessWidget {
                 begin: FractionalOffset.topCenter,
                 end: FractionalOffset.bottomCenter,
                 colors: [
-                  AppColors.primaryColor.withOpacity(0.6),
-                  AppColors.secondaryColor,
+                  AppColors.primaryColor.withOpacity(0.8),
+                  AppColors.blackColor,
                 ],
                 stops: const [0.0, 1.0],
               ),
@@ -108,7 +108,7 @@ class LoginPage extends StatelessWidget {
                             )
                           : CustomElevatedButton(
                               label: "Entrar",
-                              backgroundColor: AppColors.primaryColor,
+                              backgroundColor: AppColors.tertiaryColor,
                               onPressed: () async {
                                 FocusScope.of(context).unfocus();
 

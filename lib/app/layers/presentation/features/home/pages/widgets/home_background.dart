@@ -28,16 +28,7 @@ class HomeBackgroundCard extends StatelessWidget {
         AppSizes.size15,
       ),
       decoration: BoxDecoration(
-        color: AppColors.whiteColor,
-        gradient: LinearGradient(
-          begin: FractionalOffset.centerLeft,
-          end: FractionalOffset.centerRight,
-          colors: [
-            AppColors.primaryColor,
-            AppColors.secondaryColor,
-          ],
-          stops: const [0.0, 1.0],
-        ),
+        color: AppColors.primaryColor,
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(BorderRadiusSize.borderRadiusLarge),
         ),

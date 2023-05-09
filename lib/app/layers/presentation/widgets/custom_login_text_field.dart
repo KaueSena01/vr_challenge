@@ -60,6 +60,7 @@ class _CustomLoginTextFieldState extends State<CustomLoginTextField> {
         color: AppColors.whiteColor,
       ),
       decoration: InputDecoration(
+        fillColor: AppColors.tertiaryColor,
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.labelText,
         labelStyle: AppTextStyles.textTheme.headlineSmall!.apply(
@@ -74,7 +75,7 @@ class _CustomLoginTextFieldState extends State<CustomLoginTextField> {
             BorderRadiusSize.borderRadiusSmall,
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: AppColors.whiteColor,
             width: BorderSize.borderSizeSmall,
           ),
         ),
@@ -83,7 +84,7 @@ class _CustomLoginTextFieldState extends State<CustomLoginTextField> {
             BorderRadiusSize.borderRadiusSmall,
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: AppColors.whiteColor,
             width: BorderSize.borderSizeSmall,
           ),
         ),
@@ -92,23 +93,10 @@ class _CustomLoginTextFieldState extends State<CustomLoginTextField> {
             BorderRadiusSize.borderRadiusSmall,
           ),
           borderSide: BorderSide(
-            color: AppColors.primaryColor,
+            color: AppColors.whiteColor,
             width: BorderSize.borderSizeSmall,
           ),
         ),
-        suffixIcon: widget.isSecret
-            ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    isObscure = !isObscure;
-                  });
-                },
-                icon: Icon(
-                  isObscure ? Icons.visibility : Icons.visibility_off,
-                  color: AppColors.primaryColor,
-                ),
-              )
-            : null,
       ),
     );
   }
