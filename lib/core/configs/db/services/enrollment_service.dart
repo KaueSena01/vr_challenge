@@ -12,23 +12,12 @@ class EnrollmentService {
     try {
       final batch = database.batch();
       final studentCode = enrollmentDTO.studentCode;
-      final course = enrollmentDTO.courseCode;
-
-      if (course.isEmpty) {
-        batch.insert(
-          'enrollment',
-          {
-            'studentCode': studentCode,
-          },
-          conflictAlgorithm: ConflictAlgorithm.replace,
-        );
-      }
 
       for (final courseCode in enrollmentDTO.courseCode) {
         batch.insert(
           'enrollment',
           {
-            'courseCodes': json.jsonEncode([courseCode]),
+            'courseCode': courseCode,
             'studentCode': studentCode,
           },
           conflictAlgorithm: ConflictAlgorithm.replace,

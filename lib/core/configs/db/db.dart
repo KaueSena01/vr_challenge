@@ -56,7 +56,7 @@ class DatabaseProvider {
           CREATE TABLE enrollment (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             studentCode INTEGER,
-            courseCodes BLOB
+            courseCode INTEGER
           )
           ''');
 
