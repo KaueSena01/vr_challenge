@@ -1,29 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/app/layers/domain/entities/course_entity.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
+import 'package:vr_challenge/app/layers/presentation/widgets/custom_subtitle.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_title.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
 import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
 import 'package:vr_challenge/core/validators/input_validator.dart';
 
-class UpdateCoursePage extends StatefulWidget {
-  const UpdateCoursePage({
-    super.key,
-    required this.courseEntity,
-  });
+class CreateCoursePage extends StatelessWidget {
+  CreateCoursePage({super.key});
 
-  final CourseEntity courseEntity;
-
-  @override
-  State<UpdateCoursePage> createState() => _UpdateCoursePageState();
-}
-
-class _UpdateCoursePageState extends State<UpdateCoursePage> {
   final _formKey = GlobalKey<FormState>();
 
   final CourseStore courseStore = Modular.get<CourseStore>();
@@ -31,14 +21,6 @@ class _UpdateCoursePageState extends State<UpdateCoursePage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _syllabusController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _nameController.text = widget.courseEntity.name;
-    _descriptionController.text = widget.courseEntity.description;
-    _syllabusController.text = widget.courseEntity.syllabus;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +40,10 @@ class _UpdateCoursePageState extends State<UpdateCoursePage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        title(widget.courseEntity.name),
+                        title("Novo curso"),
+                        subtitle(
+                          "Antes de adicionar um curso na plataforma, verifique se o curso já foi adicionado anteriormente. ",
+                        ),
                         CustomTextField(
                           margin: EdgeInsets.only(
                             top: AppSizes.size60,
@@ -94,7 +79,6 @@ class _UpdateCoursePageState extends State<UpdateCoursePage> {
                             bottom: AppSizes.size15,
                           ),
                           isInputForm: true,
-                          minLines: 2,
                           maxLines: 10,
                           inputTextColor: AppColors.courseLabelColor,
                           labelText: "Ementa",
@@ -120,13 +104,12 @@ class _UpdateCoursePageState extends State<UpdateCoursePage> {
                         horizontal: AppSizes.size15,
                         vertical: AppSizes.size20,
                       ),
-                      label: "Atualizar curso",
+                      label: "Criar curso",
                       onPressed: () async {
                         FocusScope.of(context).unfocus();
 
                         if (_formKey.currentState!.validate()) {
-                          await courseStore.updateCourse(
-                            widget.courseEntity.id!,
+                          await courseStore.createCourse(
                             _nameController.text,
                             _descriptionController.text,
                             _syllabusController.text,

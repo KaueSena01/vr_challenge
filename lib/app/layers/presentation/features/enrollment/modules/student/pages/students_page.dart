@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/search_without_result.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/pages/widgets/student_list.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/stores/student_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/pages/widgets/search_without_result.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/pages/widgets/student_list.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/stores/student_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_subtitle.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';

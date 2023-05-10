@@ -25,11 +25,12 @@ import 'package:vr_challenge/app/layers/domain/use_cases/update_course_students_
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_enrolled_courses_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_student_use_case.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/module/course_module.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/modules/student_module.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/stores/student_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/module/course_module.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/stores/student_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
+
+import 'student/modules/student_module.dart';
 
 class EnrollmentModule extends Module {
   @override

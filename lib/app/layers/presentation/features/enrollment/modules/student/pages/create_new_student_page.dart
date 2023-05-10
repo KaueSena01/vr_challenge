@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/app/layers/domain/entities/student_entity.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/courses_list.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/stores/student_store.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
-import 'package:vr_challenge/app/layers/presentation/widgets/custom_alert.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/pages/widgets/courses_list.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/stores/student_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
@@ -18,38 +15,27 @@ import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
 import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
 import 'package:vr_challenge/core/validators/input_validator.dart';
 
-class UpdateStudentPage extends StatefulWidget {
-  const UpdateStudentPage({
-    super.key,
-    required this.studentEntity,
-  });
-
-  final StudentEntity studentEntity;
+class CreateNewStudent extends StatefulWidget {
+  const CreateNewStudent({super.key});
 
   @override
-  State<UpdateStudentPage> createState() => _UpdateStudentPageState();
+  State<CreateNewStudent> createState() => _CreateNewStudentState();
 }
 
-class _UpdateStudentPageState extends State<UpdateStudentPage> {
+class _CreateNewStudentState extends State<CreateNewStudent> {
   final _formKey = GlobalKey<FormState>();
 
   final CourseStore _courseStore = Modular.get<CourseStore>();
   final StudentStore _studentStore = Modular.get<StudentStore>();
-  final EnrollmentStore _enrollmentStore = Modular.get<EnrollmentStore>();
-
-  List<int> selectedCourses = [];
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _courseStore.getAllCourses();
-    _enrollmentStore.getCoursesEnrolledByStudent(widget.studentEntity.id!);
-    _enrollmentStore.getCoursesNotEnrolledByStudent(widget.studentEntity.id!);
-    _nameController.text = widget.studentEntity.name;
-    _emailController.text = widget.studentEntity.email;
   }
 
   void handleCourseSelection(int courseId) {
@@ -64,18 +50,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppBar(
-              label: "Excluir aluno",
-              labelColor: AppColors.dangerColor,
-              onTap: () => customAlert(
-                context: context,
-                code: widget.studentEntity.id!,
-                isCourse: false,
-                title: "Deletar aluno",
-                body:
-                    "Deseja realmente cancelar a matricula de ${widget.studentEntity.name}?",
-              ),
-            ),
+            const CustomAppBar(),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -85,9 +60,9 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        title("Editar"),
+                        title("Novo aluno"),
                         subtitle(
-                          "Lembre-se de avisar ao aluno seu novo usuário de acesso.",
+                          "Antes de adicionar um aluno na plataforma, verifique se o aluno já foi adicionado anteriormente.",
                         ),
                         CustomTextField(
                           margin: EdgeInsets.only(
@@ -107,7 +82,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                         CustomTextField(
                           margin: EdgeInsets.only(
                             top: AppSizes.size15,
-                            bottom: AppSizes.size45,
+                            bottom: AppSizes.size15,
                           ),
                           isInputForm: true,
                           maxLines: 2,
@@ -120,6 +95,29 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                           controller: _emailController,
                           validator: emailValidator,
                         ),
+                        CustomTextField(
+                          margin: EdgeInsets.only(
+                            top: AppSizes.size15,
+                            bottom: AppSizes.size40,
+                          ),
+                          isInputForm: true,
+                          maxLines: 10,
+                          inputTextColor: AppColors.courseLabelColor,
+                          labelText: "Senha",
+                          labelTextColor: AppColors.courseLabelColor,
+                          hintText: "Digite a senha de acesso do aluno",
+                          hintTextColor: AppColors.courseLabelColor,
+                          textInputType: TextInputType.visiblePassword,
+                          controller: _passwordController,
+                          validator: passwordValidator,
+                        ),
+                        Text(
+                          "Cursos",
+                          style: AppTextStyles.textTheme.labelMedium!.apply(
+                            color: AppColors.tertiaryColor,
+                          ),
+                        ),
+                        CustomSpace(height: AppSizes.size15),
                         Observer(
                           builder: (context) {
                             if (_courseStore.loading) {
@@ -127,44 +125,11 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Meus cursos",
-                                    style: AppTextStyles.textTheme.labelMedium!
-                                        .apply(
-                                      color: AppColors.tertiaryColor,
-                                    ),
-                                  ),
-                                  CustomSpace(height: AppSizes.size15),
-                                  CoursesList(
-                                    courseEntity: _courseStore.coursesEnrolled,
-                                    onCourseSelected: (courseId) {
-                                      handleCourseSelection(courseId);
-                                      print(_courseStore.coursesEnrolled);
-                                    },
-                                    selectedCourses:
-                                        _courseStore.selectedCourses,
-                                  ),
-                                  CustomSpace(height: AppSizes.size25),
-                                  Text(
-                                    "Cursos disponíveis",
-                                    style: AppTextStyles.textTheme.labelMedium!
-                                        .apply(
-                                      color: AppColors.tertiaryColor,
-                                    ),
-                                  ),
-                                  CustomSpace(height: AppSizes.size15),
-                                  CoursesList(
-                                    courseEntity:
-                                        _courseStore.coursesNotEnrolled,
-                                    onCourseSelected: (courseId) =>
-                                        handleCourseSelection(courseId),
-                                    selectedCourses:
-                                        _courseStore.selectedCourses,
-                                  ),
-                                ],
+                              return CoursesList(
+                                courseEntity: _courseStore.coursesList,
+                                onCourseSelected: (courseId) =>
+                                    handleCourseSelection(courseId),
+                                selectedCourses: _courseStore.selectedCourses,
                               );
                             }
                           },
@@ -185,11 +150,11 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                 FocusScope.of(context).unfocus();
 
                 if (_formKey.currentState!.validate()) {
-                  await _studentStore.updateStudent(
-                    widget.studentEntity.id!,
+                  await _studentStore.createNewStudent(
                     _nameController.text,
                     _emailController.text,
-                    widget.studentEntity.password,
+                    _passwordController.text,
+                    _courseStore.selectedCourses,
                   );
                 }
               },

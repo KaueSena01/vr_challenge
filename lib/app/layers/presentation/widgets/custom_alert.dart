@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/stores/student_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/stores/student_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_outlined_button.dart';

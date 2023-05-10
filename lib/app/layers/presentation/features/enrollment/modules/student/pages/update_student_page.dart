@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/courses_list.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/stores/student_store.dart';
+import 'package:vr_challenge/app/layers/domain/entities/student_entity.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/pages/widgets/courses_list.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/stores/student_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
+import 'package:vr_challenge/app/layers/presentation/widgets/custom_alert.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
@@ -15,27 +18,38 @@ import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
 import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
 import 'package:vr_challenge/core/validators/input_validator.dart';
 
-class CreateNewStudent extends StatefulWidget {
-  const CreateNewStudent({super.key});
+class UpdateStudentPage extends StatefulWidget {
+  const UpdateStudentPage({
+    super.key,
+    required this.studentEntity,
+  });
+
+  final StudentEntity studentEntity;
 
   @override
-  State<CreateNewStudent> createState() => _CreateNewStudentState();
+  State<UpdateStudentPage> createState() => _UpdateStudentPageState();
 }
 
-class _CreateNewStudentState extends State<CreateNewStudent> {
+class _UpdateStudentPageState extends State<UpdateStudentPage> {
   final _formKey = GlobalKey<FormState>();
 
   final CourseStore _courseStore = Modular.get<CourseStore>();
   final StudentStore _studentStore = Modular.get<StudentStore>();
+  final EnrollmentStore _enrollmentStore = Modular.get<EnrollmentStore>();
+
+  List<int> selectedCourses = [];
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _courseStore.getAllCourses();
+    _enrollmentStore.getCoursesEnrolledByStudent(widget.studentEntity.id!);
+    _enrollmentStore.getCoursesNotEnrolledByStudent(widget.studentEntity.id!);
+    _nameController.text = widget.studentEntity.name;
+    _emailController.text = widget.studentEntity.email;
   }
 
   void handleCourseSelection(int courseId) {
@@ -50,7 +64,18 @@ class _CreateNewStudentState extends State<CreateNewStudent> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const CustomAppBar(),
+            CustomAppBar(
+              label: "Excluir aluno",
+              labelColor: AppColors.dangerColor,
+              onTap: () => customAlert(
+                context: context,
+                code: widget.studentEntity.id!,
+                isCourse: false,
+                title: "Deletar aluno",
+                body:
+                    "Deseja realmente cancelar a matricula de ${widget.studentEntity.name}?",
+              ),
+            ),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -60,9 +85,9 @@ class _CreateNewStudentState extends State<CreateNewStudent> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        title("Novo aluno"),
+                        title("Editar"),
                         subtitle(
-                          "Antes de adicionar um aluno na plataforma, verifique se o aluno já foi adicionado anteriormente.",
+                          "Lembre-se de avisar ao aluno seu novo usuário de acesso.",
                         ),
                         CustomTextField(
                           margin: EdgeInsets.only(
@@ -82,7 +107,7 @@ class _CreateNewStudentState extends State<CreateNewStudent> {
                         CustomTextField(
                           margin: EdgeInsets.only(
                             top: AppSizes.size15,
-                            bottom: AppSizes.size15,
+                            bottom: AppSizes.size45,
                           ),
                           isInputForm: true,
                           maxLines: 2,
@@ -95,29 +120,6 @@ class _CreateNewStudentState extends State<CreateNewStudent> {
                           controller: _emailController,
                           validator: emailValidator,
                         ),
-                        CustomTextField(
-                          margin: EdgeInsets.only(
-                            top: AppSizes.size15,
-                            bottom: AppSizes.size40,
-                          ),
-                          isInputForm: true,
-                          maxLines: 10,
-                          inputTextColor: AppColors.courseLabelColor,
-                          labelText: "Senha",
-                          labelTextColor: AppColors.courseLabelColor,
-                          hintText: "Digite a senha de acesso do aluno",
-                          hintTextColor: AppColors.courseLabelColor,
-                          textInputType: TextInputType.visiblePassword,
-                          controller: _passwordController,
-                          validator: passwordValidator,
-                        ),
-                        Text(
-                          "Cursos",
-                          style: AppTextStyles.textTheme.labelMedium!.apply(
-                            color: AppColors.tertiaryColor,
-                          ),
-                        ),
-                        CustomSpace(height: AppSizes.size15),
                         Observer(
                           builder: (context) {
                             if (_courseStore.loading) {
@@ -125,11 +127,44 @@ class _CreateNewStudentState extends State<CreateNewStudent> {
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return CoursesList(
-                                courseEntity: _courseStore.coursesList,
-                                onCourseSelected: (courseId) =>
-                                    handleCourseSelection(courseId),
-                                selectedCourses: _courseStore.selectedCourses,
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Meus cursos",
+                                    style: AppTextStyles.textTheme.labelMedium!
+                                        .apply(
+                                      color: AppColors.tertiaryColor,
+                                    ),
+                                  ),
+                                  CustomSpace(height: AppSizes.size15),
+                                  CoursesList(
+                                    courseEntity: _courseStore.coursesEnrolled,
+                                    onCourseSelected: (courseId) {
+                                      handleCourseSelection(courseId);
+                                      print(_courseStore.coursesEnrolled);
+                                    },
+                                    selectedCourses:
+                                        _courseStore.selectedCourses,
+                                  ),
+                                  CustomSpace(height: AppSizes.size25),
+                                  Text(
+                                    "Cursos disponíveis",
+                                    style: AppTextStyles.textTheme.labelMedium!
+                                        .apply(
+                                      color: AppColors.tertiaryColor,
+                                    ),
+                                  ),
+                                  CustomSpace(height: AppSizes.size15),
+                                  CoursesList(
+                                    courseEntity:
+                                        _courseStore.coursesNotEnrolled,
+                                    onCourseSelected: (courseId) =>
+                                        handleCourseSelection(courseId),
+                                    selectedCourses:
+                                        _courseStore.selectedCourses,
+                                  ),
+                                ],
                               );
                             }
                           },
@@ -150,11 +185,11 @@ class _CreateNewStudentState extends State<CreateNewStudent> {
                 FocusScope.of(context).unfocus();
 
                 if (_formKey.currentState!.validate()) {
-                  await _studentStore.createNewStudent(
+                  await _studentStore.updateStudent(
+                    widget.studentEntity.id!,
                     _nameController.text,
                     _emailController.text,
-                    _passwordController.text,
-                    _courseStore.selectedCourses,
+                    widget.studentEntity.password,
                   );
                 }
               },

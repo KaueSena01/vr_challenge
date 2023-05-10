@@ -12,7 +12,7 @@ import 'package:vr_challenge/app/layers/domain/use_cases/remove_enrollment_use_c
 import 'package:vr_challenge/app/layers/domain/use_cases/save_student_and_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_students_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_enrolled_courses_use_case.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/stores/course_store.dart';
 part 'enrollment_store.g.dart';
 
 class EnrollmentStore = _EnrollmentStoreBase with _$EnrollmentStore;
