@@ -200,6 +200,7 @@ abstract class _StudentStoreBase with Store {
           password: password,
         ),
       );
+      await enrollmentStore.updateEnrolledCourses(id);
       Modular.to.navigate('/home');
     } catch (_) {
       AsukaSnackbar.alert(
@@ -216,7 +217,6 @@ abstract class _StudentStoreBase with Store {
 
     try {
       await _deleteStudentUseCase.call(id);
-      Modular.to.navigate('students');
       AsukaSnackbar.alert(
         "O aluno(a) foi removido",
       ).show();

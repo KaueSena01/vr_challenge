@@ -33,6 +33,26 @@ class CourseService {
     ).reversed.toList();
   }
 
+  Future<List<CourseDTO>> getCoursesByIds(List<int> courseIds) async {
+    final List<Map<String, dynamic>> maps = await database.query(
+      'course',
+      where: 'id IN (${courseIds.map((id) => '?').join(', ')})',
+      whereArgs: courseIds,
+    );
+
+    return List.generate(
+      maps.length,
+      (i) {
+        return CourseDTO(
+          id: maps[i]['id'],
+          name: maps[i]['name'],
+          description: maps[i]['description'],
+          syllabus: maps[i]['syllabus'],
+        );
+      },
+    );
+  }
+
   Future<void> updateCourse(CourseDTO courseDTO) async {
     try {
       await database.update(

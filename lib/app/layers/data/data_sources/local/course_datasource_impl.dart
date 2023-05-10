@@ -63,4 +63,17 @@ class CourseDataSourceImpl extends CourseDataSource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<CourseEntity>> getCoursesByIds(List<int> courseCode) async {
+    db = await DatabaseProvider.instance.database;
+    final course = CourseService(database: db);
+
+    try {
+      return await course.getCoursesByIds(courseCode);
+    } catch (_) {
+      log(_.toString());
+      rethrow;
+    }
+  }
 }

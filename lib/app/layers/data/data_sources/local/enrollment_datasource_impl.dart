@@ -78,4 +78,75 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
       rethrow;
     }
   }
+
+  @override
+  Future<void> removeCourseFromEnrollment(
+    List<int> studentCode,
+    int courseCode,
+  ) async {
+    db = await DatabaseProvider.instance.database;
+    final enrollment = EnrollmentService(database: db);
+
+    try {
+      await enrollment.removeCourseFromStudents(studentCode, courseCode);
+    } catch (_) {
+      log(_.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<int>> getCoursesEnrolledByStudent(int studentCode) async {
+    db = await DatabaseProvider.instance.database;
+    final enrollment = EnrollmentService(database: db);
+
+    try {
+      return await enrollment.getCoursesEnrolledByStudent(studentCode);
+    } catch (_) {
+      log(_.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<int>> getCoursesNotEnrolledByStudent(int studentCode) async {
+    db = await DatabaseProvider.instance.database;
+    final enrollment = EnrollmentService(database: db);
+
+    try {
+      return await enrollment.getCoursesNotEnrolledByStudent(studentCode);
+    } catch (_) {
+      log(_.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateEnrolledCourses(
+    int studentCode,
+    List<int> courseCodes,
+  ) async {
+    db = await DatabaseProvider.instance.database;
+    final enrollment = EnrollmentService(database: db);
+
+    try {
+      return await enrollment.updateEnrolledCourses(studentCode, courseCodes);
+    } catch (_) {
+      log(_.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> removeEnrollment(int studentCode) async {
+    db = await DatabaseProvider.instance.database;
+    final enrollment = EnrollmentService(database: db);
+
+    try {
+      await enrollment.removeEnrollment(studentCode);
+    } catch (_) {
+      log(_.toString());
+      rethrow;
+    }
+  }
 }

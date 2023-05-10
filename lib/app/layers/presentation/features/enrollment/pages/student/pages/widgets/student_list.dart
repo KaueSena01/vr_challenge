@@ -82,7 +82,7 @@ class StudentsList extends StatelessWidget {
               },
             )
           : Text(
-              "Não existe nenhum curso cadastrado =(",
+              "Não foi encontrado alunos disponíveis para matricula",
               style: AppTextStyles.textTheme.headlineSmall!.apply(
                 color: AppColors.courseLabelColor,
               ),

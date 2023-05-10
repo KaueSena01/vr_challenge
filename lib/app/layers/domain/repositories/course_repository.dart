@@ -5,4 +5,5 @@ abstract class CourseRepository {
   Future<List<CourseEntity>> getAllCourses();
   Future<void> updateCourse(CourseEntity courseEntity);
   Future<void> deleteCourse(int courseCode);
+  Future<List<CourseEntity>> getCoursesByIds(List<int> courseCode);
 }

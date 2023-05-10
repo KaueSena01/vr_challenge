@@ -5,6 +5,7 @@ import 'package:vr_challenge/app/layers/domain/entities/course_entity.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/create_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/delete_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_all_courses_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/get_courses_by_ids_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_use_case.dart';
 import 'package:vr_challenge/core/utils/string_extension.dart';
 part 'course_store.g.dart';
@@ -14,12 +15,14 @@ class CourseStore = _CourseStoreBase with _$CourseStore;
 abstract class _CourseStoreBase with Store {
   final CreateCourseUseCase _createCourseUseCase;
   final GetAllCoursesUseCase _getAllCoursesUseCase;
+  final GetCoursesByIdsUseCase _getCoursesByIdsUseCase;
   final UpdateCourseUseCase _updateCourseUseCase;
   final DeleteCourseUseCase _deleteCourseUseCase;
 
   _CourseStoreBase(
     this._createCourseUseCase,
     this._getAllCoursesUseCase,
+    this._getCoursesByIdsUseCase,
     this._updateCourseUseCase,
     this._deleteCourseUseCase,
   );
@@ -29,6 +32,15 @@ abstract class _CourseStoreBase with Store {
 
   @observable
   List<CourseEntity> coursesList = [];
+
+  @observable
+  List<CourseEntity> coursesEnrolled = [];
+
+  @observable
+  List<CourseEntity> coursesNotEnrolled = [];
+
+  @observable
+  int getCoursesNotEnrolled = 0;
 
   @observable
   String searchFilter = '';
@@ -120,6 +132,28 @@ abstract class _CourseStoreBase with Store {
 
     try {
       coursesList = await _getAllCoursesUseCase();
+    } catch (_) {
+      AsukaSnackbar.alert(
+        "Ocorreu um erro, verifique o nome do curso",
+      ).show();
+    } finally {
+      loading = false;
+    }
+  }
+
+  @action
+  Future<void> getCoursesByIds(List<int> courseCode) async {
+    loading = true;
+
+    try {
+      if (getCoursesNotEnrolled == 0 && courseCode.isNotEmpty) {
+        selectedCourses = [];
+        coursesEnrolled = await _getCoursesByIdsUseCase(courseCode);
+        selectedCourses = coursesEnrolled.map((course) => course.id!).toList();
+      } else {
+        if (coursesEnrolled.isEmpty) selectedCourses = [];
+        coursesNotEnrolled = await _getCoursesByIdsUseCase(courseCode);
+      }
     } catch (_) {
       AsukaSnackbar.alert(
         "Ocorreu um erro, verifique o nome do curso",

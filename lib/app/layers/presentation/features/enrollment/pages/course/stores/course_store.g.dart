@@ -49,6 +49,55 @@ mixin _$CourseStore on _CourseStoreBase, Store {
     });
   }
 
+  late final _$coursesEnrolledAtom =
+      Atom(name: '_CourseStoreBase.coursesEnrolled', context: context);
+
+  @override
+  List<CourseEntity> get coursesEnrolled {
+    _$coursesEnrolledAtom.reportRead();
+    return super.coursesEnrolled;
+  }
+
+  @override
+  set coursesEnrolled(List<CourseEntity> value) {
+    _$coursesEnrolledAtom.reportWrite(value, super.coursesEnrolled, () {
+      super.coursesEnrolled = value;
+    });
+  }
+
+  late final _$coursesNotEnrolledAtom =
+      Atom(name: '_CourseStoreBase.coursesNotEnrolled', context: context);
+
+  @override
+  List<CourseEntity> get coursesNotEnrolled {
+    _$coursesNotEnrolledAtom.reportRead();
+    return super.coursesNotEnrolled;
+  }
+
+  @override
+  set coursesNotEnrolled(List<CourseEntity> value) {
+    _$coursesNotEnrolledAtom.reportWrite(value, super.coursesNotEnrolled, () {
+      super.coursesNotEnrolled = value;
+    });
+  }
+
+  late final _$getCoursesNotEnrolledAtom =
+      Atom(name: '_CourseStoreBase.getCoursesNotEnrolled', context: context);
+
+  @override
+  int get getCoursesNotEnrolled {
+    _$getCoursesNotEnrolledAtom.reportRead();
+    return super.getCoursesNotEnrolled;
+  }
+
+  @override
+  set getCoursesNotEnrolled(int value) {
+    _$getCoursesNotEnrolledAtom.reportWrite(value, super.getCoursesNotEnrolled,
+        () {
+      super.getCoursesNotEnrolled = value;
+    });
+  }
+
   late final _$searchFilterAtom =
       Atom(name: '_CourseStoreBase.searchFilter', context: context);
 
@@ -96,6 +145,15 @@ mixin _$CourseStore on _CourseStoreBase, Store {
   @override
   Future<void> getAllCourses() {
     return _$getAllCoursesAsyncAction.run(() => super.getAllCourses());
+  }
+
+  late final _$getCoursesByIdsAsyncAction =
+      AsyncAction('_CourseStoreBase.getCoursesByIds', context: context);
+
+  @override
+  Future<void> getCoursesByIds(List<int> courseCode) {
+    return _$getCoursesByIdsAsyncAction
+        .run(() => super.getCoursesByIds(courseCode));
   }
 
   late final _$updateCourseAsyncAction =
@@ -157,6 +215,9 @@ mixin _$CourseStore on _CourseStoreBase, Store {
     return '''
 loading: ${loading},
 coursesList: ${coursesList},
+coursesEnrolled: ${coursesEnrolled},
+coursesNotEnrolled: ${coursesNotEnrolled},
+getCoursesNotEnrolled: ${getCoursesNotEnrolled},
 searchFilter: ${searchFilter},
 selectedCourses: ${selectedCourses},
 filteredCourses: ${filteredCourses}

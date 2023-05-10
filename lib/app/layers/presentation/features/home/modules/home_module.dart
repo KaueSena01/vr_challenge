@@ -4,6 +4,7 @@ import 'package:vr_challenge/app/layers/data/repositories/course_repository_impl
 import 'package:vr_challenge/app/layers/domain/use_cases/create_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/delete_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_all_courses_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/get_courses_by_ids_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_use_case.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/module/course_module.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
@@ -17,8 +18,11 @@ class HomeModule extends Module {
     Bind((i) => CreateCourseUseCase(courseRepository: i.get())),
     Bind((i) => CourseRepositoryImpl(courseDataSource: i.get())),
     Bind((i) => CourseDataSourceImpl()),
-    Bind.lazySingleton((i) => CourseStore(i.get(), i.get(), i.get(), i.get())),
+    Bind.lazySingleton(
+        (i) => CourseStore(i.get(), i.get(), i.get(), i.get(), i.get())),
     Bind.lazySingleton((i) => GetAllCoursesUseCase(courseRepository: i.get())),
+    Bind.lazySingleton(
+        (i) => GetCoursesByIdsUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => UpdateCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => DeleteCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => CourseRepositoryImpl(courseDataSource: i.get())),

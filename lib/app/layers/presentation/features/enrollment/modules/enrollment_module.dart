@@ -11,13 +11,19 @@ import 'package:vr_challenge/app/layers/domain/use_cases/delete_course_use_case.
 import 'package:vr_challenge/app/layers/domain/use_cases/delete_student_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_all_courses_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_all_students_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/get_courses_by_ids_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/get_courses_enrolled_by_student_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/get_courses_not_enrolled_by_student_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_enrolled_students_for_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_quantity_of_students_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_students_by_ids_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_students_not_enrolled_for_course_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/remove_course_from_enrollment_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/remove_enrollment_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/save_student_and_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_students_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_use_case.dart';
+import 'package:vr_challenge/app/layers/domain/use_cases/update_enrolled_courses_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_student_use_case.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/module/course_module.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
@@ -41,8 +47,11 @@ class EnrollmentModule extends Module {
     Bind.lazySingleton((i) => StudentDataSourceImpl()),
     Bind.lazySingleton(
         (i) => StudentStore(i.get(), i.get(), i.get(), i.get(), i.get())),
-    Bind.lazySingleton((i) => CourseStore(i.get(), i.get(), i.get(), i.get())),
+    Bind.lazySingleton(
+        (i) => CourseStore(i.get(), i.get(), i.get(), i.get(), i.get())),
     Bind.lazySingleton((i) => GetAllCoursesUseCase(courseRepository: i.get())),
+    Bind.lazySingleton(
+        (i) => GetCoursesByIdsUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => UpdateCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => DeleteCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => CourseRepositoryImpl(courseDataSource: i.get())),
@@ -55,15 +64,25 @@ class EnrollmentModule extends Module {
     Bind.lazySingleton(
         (i) => SaveStudentAndCourseUseCase(enrollmentRepository: i.get())),
     Bind.lazySingleton((i) =>
+        GetCoursesEnrolledByStudentsUseCase(enrollmentRepository: i.get())),
+    Bind.lazySingleton((i) =>
+        GetCoursesNotEnrolledByStudentsUseCase(enrollmentRepository: i.get())),
+    Bind.lazySingleton((i) =>
         GetStudentsNotEnrolledForCourseUseCase(enrollmentRepository: i.get())),
+    Bind.lazySingleton(
+        (i) => UpdateEnrolledCoursesUseCase(enrollmentRepository: i.get())),
+    Bind.lazySingleton(
+        (i) => RemoveEnrollmentUseCase(enrollmentRepository: i.get())),
     Bind.lazySingleton(
         (i) => UpdateCourseStudentsUseCase(enrollmentRepository: i.get())),
     Bind.lazySingleton(
         (i) => GetEnrolledCoursesCountUseCase(enrollmentRepository: i.get())),
     Bind.lazySingleton((i) =>
+        RemoveCourseFromEnrollmentUseCase(enrollmentRepository: i.get())),
+    Bind.lazySingleton((i) =>
         GetEnrolledStudentsForCourseUseCase(enrollmentRepository: i.get())),
-    Bind.lazySingleton(
-        (i) => EnrollmentStore(i.get(), i.get(), i.get(), i.get(), i.get())),
+    Bind.lazySingleton((i) => EnrollmentStore(i.get(), i.get(), i.get(),
+        i.get(), i.get(), i.get(), i.get(), i.get(), i.get(), i.get())),
   ];
 
   @override

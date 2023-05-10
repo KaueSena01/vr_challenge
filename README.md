@@ -37,3 +37,16 @@ atualizar no banco aluno 1 - curso [0, 1]
 aluno 2 - curso [1]
 
 remover formkey
+
+CURSO:
+Engenharia id -> 1
+
+StudentsNodEnrollment [1, 2, 3] -> remover o id do curso em cada um desses elementos
+
+Envia o id do aluno e busca o array de ids do curso
+Após ter o id dos cursos busca os cursos
+Exibi os cursos em que está matriculado
+Exibi os cursos em que não está matriculado
+Pode remover e adicionar novos, exemplo curso id -> 1 -> remove
+id -> 2, 3, 4
+Se não remover id -> 1, 2, 3

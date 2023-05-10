@@ -84,7 +84,7 @@ class CoursesList extends StatelessWidget {
               },
             )
           : Text(
-              "Não existe nenhum curso cadastrado =(",
+              "Nenhum curso foi encontrado =(",
               style: AppTextStyles.textTheme.headlineSmall!.apply(
                 color: AppColors.courseLabelColor,
               ),

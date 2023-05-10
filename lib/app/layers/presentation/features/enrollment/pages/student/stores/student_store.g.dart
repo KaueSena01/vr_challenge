@@ -16,6 +16,14 @@ mixin _$StudentStore on _StudentStoreBase, Store {
           Computed<List<StudentEntity>>(() => super.filteredStudents,
               name: '_StudentStoreBase.filteredStudents'))
       .value;
+  Computed<List<StudentEntity>>? _$filteredStudentsNoEnrollmentComputed;
+
+  @override
+  List<StudentEntity> get filteredStudentsNoEnrollment =>
+      (_$filteredStudentsNoEnrollmentComputed ??= Computed<List<StudentEntity>>(
+              () => super.filteredStudentsNoEnrollment,
+              name: '_StudentStoreBase.filteredStudentsNoEnrollment'))
+          .value;
 
   late final _$loadingAtom =
       Atom(name: '_StudentStoreBase.loading', context: context);
@@ -176,7 +184,8 @@ studentsListNoEnrollment: ${studentsListNoEnrollment},
 studentsList: ${studentsList},
 selectedStudents: ${selectedStudents},
 searchFilter: ${searchFilter},
-filteredStudents: ${filteredStudents}
+filteredStudents: ${filteredStudents},
+filteredStudentsNoEnrollment: ${filteredStudentsNoEnrollment}
     ''';
   }
 }

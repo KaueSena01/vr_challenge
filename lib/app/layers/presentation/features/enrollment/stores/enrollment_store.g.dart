@@ -89,6 +89,38 @@ mixin _$EnrollmentStore on _EnrollmentStoreBase, Store {
     });
   }
 
+  late final _$enrollmentCoursesAtom =
+      Atom(name: '_EnrollmentStoreBase.enrollmentCourses', context: context);
+
+  @override
+  List<int> get enrollmentCourses {
+    _$enrollmentCoursesAtom.reportRead();
+    return super.enrollmentCourses;
+  }
+
+  @override
+  set enrollmentCourses(List<int> value) {
+    _$enrollmentCoursesAtom.reportWrite(value, super.enrollmentCourses, () {
+      super.enrollmentCourses = value;
+    });
+  }
+
+  late final _$coursesNotEnrolledAtom =
+      Atom(name: '_EnrollmentStoreBase.coursesNotEnrolled', context: context);
+
+  @override
+  List<int> get coursesNotEnrolled {
+    _$coursesNotEnrolledAtom.reportRead();
+    return super.coursesNotEnrolled;
+  }
+
+  @override
+  set coursesNotEnrolled(List<int> value) {
+    _$coursesNotEnrolledAtom.reportWrite(value, super.coursesNotEnrolled, () {
+      super.coursesNotEnrolled = value;
+    });
+  }
+
   late final _$saveStudentAndCourseAsyncAction = AsyncAction(
       '_EnrollmentStoreBase.saveStudentAndCourse',
       context: context);
@@ -139,6 +171,55 @@ mixin _$EnrollmentStore on _EnrollmentStoreBase, Store {
         .run(() => super.updateCourseStudents(studentCode, courseCode));
   }
 
+  late final _$removeCourseFromEnrollmentAsyncAction = AsyncAction(
+      '_EnrollmentStoreBase.removeCourseFromEnrollment',
+      context: context);
+
+  @override
+  Future<void> removeCourseFromEnrollment(int courseCode) {
+    return _$removeCourseFromEnrollmentAsyncAction
+        .run(() => super.removeCourseFromEnrollment(courseCode));
+  }
+
+  late final _$getCoursesEnrolledByStudentAsyncAction = AsyncAction(
+      '_EnrollmentStoreBase.getCoursesEnrolledByStudent',
+      context: context);
+
+  @override
+  Future<void> getCoursesEnrolledByStudent(int studentCode) {
+    return _$getCoursesEnrolledByStudentAsyncAction
+        .run(() => super.getCoursesEnrolledByStudent(studentCode));
+  }
+
+  late final _$getCoursesNotEnrolledByStudentAsyncAction = AsyncAction(
+      '_EnrollmentStoreBase.getCoursesNotEnrolledByStudent',
+      context: context);
+
+  @override
+  Future<void> getCoursesNotEnrolledByStudent(int studentCode) {
+    return _$getCoursesNotEnrolledByStudentAsyncAction
+        .run(() => super.getCoursesNotEnrolledByStudent(studentCode));
+  }
+
+  late final _$updateEnrolledCoursesAsyncAction = AsyncAction(
+      '_EnrollmentStoreBase.updateEnrolledCourses',
+      context: context);
+
+  @override
+  Future<void> updateEnrolledCourses(int studentCode) {
+    return _$updateEnrolledCoursesAsyncAction
+        .run(() => super.updateEnrolledCourses(studentCode));
+  }
+
+  late final _$removeEnrollmentAsyncAction =
+      AsyncAction('_EnrollmentStoreBase.removeEnrollment', context: context);
+
+  @override
+  Future<void> removeEnrollment(int studentCode) {
+    return _$removeEnrollmentAsyncAction
+        .run(() => super.removeEnrollment(studentCode));
+  }
+
   late final _$_EnrollmentStoreBaseActionController =
       ActionController(name: '_EnrollmentStoreBase', context: context);
 
@@ -160,7 +241,9 @@ loading: ${loading},
 count: ${count},
 enrollmentCount: ${enrollmentCount},
 studentsNotEnrolled: ${studentsNotEnrolled},
-studentsEnrolled: ${studentsEnrolled}
+studentsEnrolled: ${studentsEnrolled},
+enrollmentCourses: ${enrollmentCourses},
+coursesNotEnrolled: ${coursesNotEnrolled}
     ''';
   }
 }

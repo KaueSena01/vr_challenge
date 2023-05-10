@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/stores/student_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_outlined_button.dart';
 import 'package:vr_challenge/core/constants/theme/app_colors.dart';
@@ -17,6 +18,7 @@ void customAlert({
 }) {
   StudentStore studentStore = Modular.get<StudentStore>();
   CourseStore courseStore = Modular.get<CourseStore>();
+  EnrollmentStore enrollmentStore = Modular.get<EnrollmentStore>();
 
   showDialog(
     context: context,
@@ -47,9 +49,15 @@ void customAlert({
             onPressed: () {
               Navigator.pop(context);
               isCourse
-                  ? courseStore.deleteCourse(code)
-                  : studentStore.deleteStudent(code);
-              Modular.to.navigate('/home/');
+                  ? {
+                      courseStore.deleteCourse(code),
+                      enrollmentStore.removeCourseFromEnrollment(code)
+                    }
+                  : {
+                      studentStore.deleteStudent(code),
+                      enrollmentStore.removeEnrollment(code),
+                    };
+              Modular.to.navigate('/home');
             },
           ),
           CustomOutlinedButton(

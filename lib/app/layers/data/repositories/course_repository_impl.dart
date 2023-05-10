@@ -26,4 +26,9 @@ class CourseRepositoryImpl implements CourseRepository {
   Future<void> deleteCourse(int courseCode) async {
     await courseDataSource.deleteCourse(courseCode);
   }
+
+  @override
+  Future<List<CourseEntity>> getCoursesByIds(List<int> courseCode) async {
+    return await courseDataSource.getCoursesByIds(courseCode);
+  }
 }

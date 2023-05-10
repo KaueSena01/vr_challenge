@@ -5,6 +5,7 @@ import 'package:vr_challenge/app/layers/domain/entities/student_entity.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/courses_list.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/stores/student_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_alert.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
@@ -34,6 +35,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
 
   final CourseStore _courseStore = Modular.get<CourseStore>();
   final StudentStore _studentStore = Modular.get<StudentStore>();
+  final EnrollmentStore _enrollmentStore = Modular.get<EnrollmentStore>();
 
   List<int> selectedCourses = [];
 
@@ -44,6 +46,8 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
   void initState() {
     super.initState();
     _courseStore.getAllCourses();
+    _enrollmentStore.getCoursesEnrolledByStudent(widget.studentEntity.id!);
+    _enrollmentStore.getCoursesNotEnrolledByStudent(widget.studentEntity.id!);
     _nameController.text = widget.studentEntity.name;
     _emailController.text = widget.studentEntity.email;
   }
@@ -116,13 +120,6 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                           controller: _emailController,
                           validator: emailValidator,
                         ),
-                        Text(
-                          "Cursos",
-                          style: AppTextStyles.textTheme.labelMedium!.apply(
-                            color: AppColors.tertiaryColor,
-                          ),
-                        ),
-                        CustomSpace(height: AppSizes.size15),
                         Observer(
                           builder: (context) {
                             if (_courseStore.loading) {
@@ -130,11 +127,44 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return CoursesList(
-                                courseEntity: _courseStore.coursesList,
-                                onCourseSelected: (courseId) =>
-                                    handleCourseSelection(courseId),
-                                selectedCourses: _courseStore.selectedCourses,
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Meus cursos",
+                                    style: AppTextStyles.textTheme.labelMedium!
+                                        .apply(
+                                      color: AppColors.tertiaryColor,
+                                    ),
+                                  ),
+                                  CustomSpace(height: AppSizes.size15),
+                                  CoursesList(
+                                    courseEntity: _courseStore.coursesEnrolled,
+                                    onCourseSelected: (courseId) {
+                                      handleCourseSelection(courseId);
+                                      print(_courseStore.coursesEnrolled);
+                                    },
+                                    selectedCourses:
+                                        _courseStore.selectedCourses,
+                                  ),
+                                  CustomSpace(height: AppSizes.size25),
+                                  Text(
+                                    "Cursos disponíveis",
+                                    style: AppTextStyles.textTheme.labelMedium!
+                                        .apply(
+                                      color: AppColors.tertiaryColor,
+                                    ),
+                                  ),
+                                  CustomSpace(height: AppSizes.size15),
+                                  CoursesList(
+                                    courseEntity:
+                                        _courseStore.coursesNotEnrolled,
+                                    onCourseSelected: (courseId) =>
+                                        handleCourseSelection(courseId),
+                                    selectedCourses:
+                                        _courseStore.selectedCourses,
+                                  ),
+                                ],
                               );
                             }
                           },
