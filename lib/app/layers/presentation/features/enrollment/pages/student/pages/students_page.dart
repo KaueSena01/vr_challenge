@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/search_without_result.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/pages/widgets/student_list.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/student/stores/student_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
@@ -23,7 +23,6 @@ class _StudentsPageState extends State<StudentsPage> {
   final _searchController = TextEditingController();
 
   final StudentStore _studentStore = Modular.get<StudentStore>();
-  final CourseStore _courseStore = Modular.get<CourseStore>();
 
   @override
   void initState() {
@@ -39,7 +38,7 @@ class _StudentsPageState extends State<StudentsPage> {
   }
 
   void _onSearchChanged() {
-    // _courseStore.searchCourses(_searchController.text);
+    _studentStore.searchStudents(_searchController.text);
   }
 
   @override
@@ -57,7 +56,12 @@ class _StudentsPageState extends State<StudentsPage> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSizes.size15),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSizes.size15,
+                    AppSizes.size00,
+                    AppSizes.size15,
+                    AppSizes.size35,
+                  ),
                   child: Form(
                     key: _formKey,
                     child: Column(
@@ -85,14 +89,15 @@ class _StudentsPageState extends State<StudentsPage> {
                                 child: CircularProgressIndicator(),
                               );
                             } else {
-                              return
-                                  // _studentStore.filteredCourses.isEmpty
-                                  //     ? const SearchWithoutResult()
-                                  //     :
-                                  StudentsList(
-                                label: "Editar",
-                                studentEntity: _studentStore.studentsList,
-                              );
+                              return _studentStore.filteredStudents.isEmpty
+                                  ? const SearchWithoutResult(
+                                      message: "Nenhum aluno foi encontrado",
+                                    )
+                                  : StudentsList(
+                                      label: "Editar",
+                                      studentEntity:
+                                          _studentStore.filteredStudents,
+                                    );
                             }
                           },
                         ),

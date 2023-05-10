@@ -33,10 +33,15 @@ class Courses extends StatelessWidget {
                   color: AppColors.darkColor,
                 ),
               ),
-              Text(
-                "Novo curso",
-                style: AppTextStyles.textTheme.labelMedium!.apply(
-                  color: AppColors.tertiaryColor,
+              GestureDetector(
+                child: Text(
+                  "Novo curso",
+                  style: AppTextStyles.textTheme.labelMedium!.apply(
+                    color: AppColors.tertiaryColor,
+                  ),
+                ),
+                onTap: () => Modular.to.pushNamed(
+                  '/enrollment/course/',
                 ),
               ),
             ],

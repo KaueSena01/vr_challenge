@@ -63,17 +63,14 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
             CustomAppBar(
               label: "Excluir aluno",
               labelColor: AppColors.dangerColor,
-              onTap: () {
-                customAlert(
-                  context: context,
-                  title: "Deletar aluno",
-                  body:
-                      "Deseja realmente cancelar a matricula de ${widget.studentEntity.name}?",
-                  onPressed: () async {
-                    _studentStore.deleteCourse(widget.studentEntity.id!);
-                  },
-                );
-              },
+              onTap: () => customAlert(
+                context: context,
+                code: widget.studentEntity.id!,
+                isCourse: false,
+                title: "Deletar aluno",
+                body:
+                    "Deseja realmente cancelar a matricula de ${widget.studentEntity.name}?",
+              ),
             ),
             Expanded(
               child: SingleChildScrollView(
@@ -86,7 +83,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                       children: [
                         title("Editar"),
                         subtitle(
-                          "Antes de adicionar um aluno na plataforma, verifique se o aluno já foi adicionado anteriormente.",
+                          "Lembre-se de avisar ao aluno seu novo usuário de acesso.",
                         ),
                         CustomTextField(
                           margin: EdgeInsets.only(

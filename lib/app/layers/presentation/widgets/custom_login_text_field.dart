@@ -60,7 +60,7 @@ class _CustomLoginTextFieldState extends State<CustomLoginTextField> {
         color: AppColors.whiteColor,
       ),
       decoration: InputDecoration(
-        fillColor: AppColors.tertiaryColor,
+        fillColor: AppColors.primaryColor.withOpacity(0.6),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.labelText,
         labelStyle: AppTextStyles.textTheme.headlineSmall!.apply(

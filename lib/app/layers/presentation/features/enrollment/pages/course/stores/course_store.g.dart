@@ -120,6 +120,17 @@ mixin _$CourseStore on _CourseStoreBase, Store {
       ActionController(name: '_CourseStoreBase', context: context);
 
   @override
+  void searchCourses(String search) {
+    final _$actionInfo = _$_CourseStoreBaseActionController.startAction(
+        name: '_CourseStoreBase.searchCourses');
+    try {
+      return super.searchCourses(search);
+    } finally {
+      _$_CourseStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   List<int> handleCourseSelection(int courseId) {
     final _$actionInfo = _$_CourseStoreBaseActionController.startAction(
         name: '_CourseStoreBase.handleCourseSelection');
@@ -131,11 +142,11 @@ mixin _$CourseStore on _CourseStoreBase, Store {
   }
 
   @override
-  void searchCourses(String search) {
+  void resetCourses() {
     final _$actionInfo = _$_CourseStoreBaseActionController.startAction(
-        name: '_CourseStoreBase.searchCourses');
+        name: '_CourseStoreBase.resetCourses');
     try {
-      return super.searchCourses(search);
+      return super.resetCourses();
     } finally {
       _$_CourseStoreBaseActionController.endAction(_$actionInfo);
     }

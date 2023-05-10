@@ -19,7 +19,6 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(enrollmentStore.count);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -51,22 +50,6 @@ class Body extends StatelessWidget {
           ),
         ),
         CustomSpace(height: AppSizes.size35),
-        Text(
-          "Estado",
-          style: AppTextStyles.textTheme.labelSmall!.apply(
-            color: AppColors.tertiaryColor,
-          ),
-        ),
-        CustomSpace(height: AppSizes.size05),
-        Text(
-          enrollmentStore.count == 10 ? "Turma fechada" : "Turma aberta",
-          style: AppTextStyles.textTheme.labelSmall!.apply(
-            color: enrollmentStore.count == 10
-                ? AppColors.dangerColor
-                : AppColors.subtitileColor,
-          ),
-        ),
-        CustomSpace(height: AppSizes.size35),
         Observer(
           builder: (context) {
             if (enrollmentStore.loading) {
@@ -77,6 +60,24 @@ class Body extends StatelessWidget {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text(
+                    "Estado",
+                    style: AppTextStyles.textTheme.labelSmall!.apply(
+                      color: AppColors.tertiaryColor,
+                    ),
+                  ),
+                  CustomSpace(height: AppSizes.size05),
+                  Text(
+                    enrollmentStore.count == 10
+                        ? "Turma fechada"
+                        : "Turma aberta",
+                    style: AppTextStyles.textTheme.labelSmall!.apply(
+                      color: enrollmentStore.count == 10
+                          ? AppColors.dangerColor
+                          : AppColors.subtitileColor,
+                    ),
+                  ),
+                  CustomSpace(height: AppSizes.size35),
                   Text(
                     "Quantidade",
                     style: AppTextStyles.textTheme.labelSmall!.apply(

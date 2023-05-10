@@ -9,6 +9,14 @@ part of 'student_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$StudentStore on _StudentStoreBase, Store {
+  Computed<List<StudentEntity>>? _$filteredStudentsComputed;
+
+  @override
+  List<StudentEntity> get filteredStudents => (_$filteredStudentsComputed ??=
+          Computed<List<StudentEntity>>(() => super.filteredStudents,
+              name: '_StudentStoreBase.filteredStudents'))
+      .value;
+
   late final _$loadingAtom =
       Atom(name: '_StudentStoreBase.loading', context: context);
 
@@ -74,6 +82,22 @@ mixin _$StudentStore on _StudentStoreBase, Store {
     });
   }
 
+  late final _$searchFilterAtom =
+      Atom(name: '_StudentStoreBase.searchFilter', context: context);
+
+  @override
+  String get searchFilter {
+    _$searchFilterAtom.reportRead();
+    return super.searchFilter;
+  }
+
+  @override
+  set searchFilter(String value) {
+    _$searchFilterAtom.reportWrite(value, super.searchFilter, () {
+      super.searchFilter = value;
+    });
+  }
+
   late final _$createNewStudentAsyncAction =
       AsyncAction('_StudentStoreBase.createNewStudent', context: context);
 
@@ -111,16 +135,27 @@ mixin _$StudentStore on _StudentStoreBase, Store {
         .run(() => super.updateStudent(id, name, email, password));
   }
 
-  late final _$deleteCourseAsyncAction =
-      AsyncAction('_StudentStoreBase.deleteCourse', context: context);
+  late final _$deleteStudentAsyncAction =
+      AsyncAction('_StudentStoreBase.deleteStudent', context: context);
 
   @override
-  Future<void> deleteCourse(int id) {
-    return _$deleteCourseAsyncAction.run(() => super.deleteCourse(id));
+  Future<void> deleteStudent(int id) {
+    return _$deleteStudentAsyncAction.run(() => super.deleteStudent(id));
   }
 
   late final _$_StudentStoreBaseActionController =
       ActionController(name: '_StudentStoreBase', context: context);
+
+  @override
+  void searchStudents(String search) {
+    final _$actionInfo = _$_StudentStoreBaseActionController.startAction(
+        name: '_StudentStoreBase.searchStudents');
+    try {
+      return super.searchStudents(search);
+    } finally {
+      _$_StudentStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   List<int> handleStudentSelection(int studentCode) {
@@ -139,7 +174,9 @@ mixin _$StudentStore on _StudentStoreBase, Store {
 loading: ${loading},
 studentsListNoEnrollment: ${studentsListNoEnrollment},
 studentsList: ${studentsList},
-selectedStudents: ${selectedStudents}
+selectedStudents: ${selectedStudents},
+searchFilter: ${searchFilter},
+filteredStudents: ${filteredStudents}
     ''';
   }
 }

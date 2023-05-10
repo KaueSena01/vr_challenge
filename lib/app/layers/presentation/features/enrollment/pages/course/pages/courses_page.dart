@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/courses_list.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/searchWithoutResult.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/search_without_result.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_subtitle.dart';
@@ -56,7 +56,12 @@ class _CoursesPageState extends State<CoursesPage> {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: AppSizes.size15),
+                  padding: EdgeInsets.fromLTRB(
+                    AppSizes.size15,
+                    AppSizes.size00,
+                    AppSizes.size15,
+                    AppSizes.size35,
+                  ),
                   child: Form(
                     key: _formKey,
                     child: Column(

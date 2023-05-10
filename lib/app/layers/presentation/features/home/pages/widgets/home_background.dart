@@ -9,15 +9,24 @@ import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
 import 'package:vr_challenge/core/utils/name_formart.dart';
 
 class HomeBackgroundCard extends StatelessWidget {
-  const HomeBackgroundCard({
-    super.key,
+  HomeBackgroundCard({
+    Key? key,
     required this.adminEntity,
-  });
+    required this.onSearchTextChanged,
+  }) : super(key: key);
 
   final AdminEntity adminEntity;
+  final TextEditingController _searchController = TextEditingController();
+  final Function(String)? onSearchTextChanged;
 
   @override
   Widget build(BuildContext context) {
+    _searchController.addListener(() {
+      if (onSearchTextChanged != null) {
+        onSearchTextChanged!(_searchController.text);
+      }
+    });
+
     return Container(
       height: AppSizes.size240,
       width: double.infinity,
@@ -72,6 +81,7 @@ class HomeBackgroundCard extends StatelessWidget {
               Icons.search,
               size: AppSizes.size25,
             ),
+            controller: _searchController,
           ),
         ],
       ),

@@ -8,6 +8,7 @@ import 'package:vr_challenge/app/layers/domain/use_cases/get_all_students_use_ca
 import 'package:vr_challenge/app/layers/domain/use_cases/get_students_by_ids_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_student_use_case.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
+import 'package:vr_challenge/core/utils/string_extension.dart';
 part 'student_store.g.dart';
 
 class StudentStore = _StudentStoreBase with _$StudentStore;
@@ -40,6 +41,60 @@ abstract class _StudentStoreBase with Store {
 
   @observable
   List<int> selectedStudents = [];
+
+  @observable
+  String searchFilter = '';
+
+  @computed
+  List<StudentEntity> get filteredStudents {
+    final filtered = studentsList.where(
+      (student) {
+        final studentName = student.name.toLowerCase().removeDiacritics();
+        final searchFilterLowercase =
+            searchFilter.toLowerCase().removeDiacritics();
+        final searchWords = searchFilterLowercase
+            .split(RegExp(r'\s+'))
+            .where((s) => s.length >= 3);
+        final nameWords =
+            studentName.split(RegExp(r'\s+')).where((s) => s.length >= 3);
+        return searchWords.every(
+          (searchWord) {
+            return studentName.contains(searchWord) ||
+                nameWords.any((nameWord) => nameWord.contains(searchWord));
+          },
+        );
+      },
+    );
+    return filtered.toList();
+  }
+
+  @computed
+  List<StudentEntity> get filteredStudentsNoEnrollment {
+    final filtered = studentsListNoEnrollment.where(
+      (student) {
+        final studentName = student.name.toLowerCase().removeDiacritics();
+        final searchFilterLowercase =
+            searchFilter.toLowerCase().removeDiacritics();
+        final searchWords = searchFilterLowercase
+            .split(RegExp(r'\s+'))
+            .where((s) => s.length >= 3);
+        final nameWords =
+            studentName.split(RegExp(r'\s+')).where((s) => s.length >= 3);
+        return searchWords.every(
+          (searchWord) {
+            return studentName.contains(searchWord) ||
+                nameWords.any((nameWord) => nameWord.contains(searchWord));
+          },
+        );
+      },
+    );
+    return filtered.toList();
+  }
+
+  @action
+  void searchStudents(String search) {
+    searchFilter = search;
+  }
 
   @action
   List<int> handleStudentSelection(int studentCode) {
@@ -156,7 +211,7 @@ abstract class _StudentStoreBase with Store {
   }
 
   @action
-  Future<void> deleteCourse(int id) async {
+  Future<void> deleteStudent(int id) async {
     loading = true;
 
     try {

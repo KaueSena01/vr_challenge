@@ -51,7 +51,7 @@ class LoginPage extends StatelessWidget {
                   AppColors.primaryColor.withOpacity(0.8),
                   AppColors.blackColor,
                 ],
-                stops: const [0.0, 1.0],
+                stops: const [0.0, 0.9],
               ),
             ),
             child: Padding(

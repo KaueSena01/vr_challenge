@@ -6,6 +6,7 @@ import 'package:vr_challenge/app/layers/domain/use_cases/create_course_use_case.
 import 'package:vr_challenge/app/layers/domain/use_cases/delete_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_all_courses_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/update_course_use_case.dart';
+import 'package:vr_challenge/core/utils/string_extension.dart';
 part 'course_store.g.dart';
 
 class CourseStore = _CourseStoreBase with _$CourseStore;
@@ -36,10 +37,32 @@ abstract class _CourseStoreBase with Store {
   List<int> selectedCourses = [];
 
   @computed
-  List<CourseEntity> get filteredCourses => coursesList
-      .where((course) =>
-          course.name.toLowerCase().contains(searchFilter.toLowerCase()))
-      .toList();
+  List<CourseEntity> get filteredCourses {
+    final filtered = coursesList.where(
+      (course) {
+        final courseName = course.name.toLowerCase().removeDiacritics();
+        final searchFilterLowercase =
+            searchFilter.toLowerCase().removeDiacritics();
+        final searchWords = searchFilterLowercase
+            .split(RegExp(r'\s+'))
+            .where((s) => s.length >= 3);
+        final nameWords =
+            courseName.split(RegExp(r'\s+')).where((s) => s.length >= 3);
+        return searchWords.every(
+          (searchWord) {
+            return courseName.contains(searchWord) ||
+                nameWords.any((nameWord) => nameWord.contains(searchWord));
+          },
+        );
+      },
+    );
+    return filtered.toList();
+  }
+
+  @action
+  void searchCourses(String search) {
+    searchFilter = search;
+  }
 
   @action
   List<int> handleCourseSelection(int courseId) {
@@ -58,8 +81,8 @@ abstract class _CourseStoreBase with Store {
   }
 
   @action
-  void searchCourses(String search) {
-    searchFilter = search.toLowerCase();
+  void resetCourses() {
+    searchFilter = '';
   }
 
   @action
@@ -78,7 +101,7 @@ abstract class _CourseStoreBase with Store {
           syllabus: syllabus,
         ),
       );
-      Modular.to.pop();
+      Modular.to.navigate('/home/');
       AsukaSnackbar.success(
         "O curso de $name foi adicionado com sucesso",
       ).show();
@@ -96,8 +119,7 @@ abstract class _CourseStoreBase with Store {
     loading = true;
 
     try {
-      final courses = await _getAllCoursesUseCase();
-      coursesList = courses;
+      coursesList = await _getAllCoursesUseCase();
     } catch (_) {
       AsukaSnackbar.alert(
         "Ocorreu um erro, verifique o nome do curso",
@@ -125,7 +147,7 @@ abstract class _CourseStoreBase with Store {
           syllabus: syllabus,
         ),
       );
-      Modular.to.pop();
+      Modular.to.navigate('/home');
     } catch (_) {
       AsukaSnackbar.alert(
         "Ocorreu um erro, verifique o nome do curso",

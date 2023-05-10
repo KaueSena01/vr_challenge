@@ -118,7 +118,7 @@ abstract class _EnrollmentStoreBase with Store {
 
     try {
       await _updateCourseStudentsUseCase(studentCode, courseCode);
-      Modular.to.pop();
+      Modular.to.navigate('/home');
     } catch (_) {
     } finally {
       loading = false;

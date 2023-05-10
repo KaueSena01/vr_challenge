@@ -24,10 +24,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
       items: [
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
-            "assets/icons/search.svg",
+            "assets/icons/lock.svg",
             height: AppSizes.size25,
           ),
-          label: 'Pesquisar',
+          label: 'Admin',
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(

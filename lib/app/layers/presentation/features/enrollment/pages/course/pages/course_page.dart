@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:vr_challenge/app/layers/domain/entities/course_entity.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/body.dart';
-import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/course_alert.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
+import 'package:vr_challenge/app/layers/presentation/widgets/custom_alert.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_outlined_button.dart';
@@ -69,32 +70,37 @@ class _CoursePageState extends State<CoursePage> {
                 ),
               ),
             ),
-            CustomElevatedButton(
-              margin: EdgeInsets.fromLTRB(
-                AppSizes.size15,
-                AppSizes.size15,
-                AppSizes.size15,
-                AppSizes.size05,
-              ),
-              label: "Matricular alunos",
-              onPressed: enrollmentStore.count < 10
-                  ? () => Modular.to.pushNamed(
-                        '/enrollment/student/enrollment',
-                        arguments: widget.courseEntity,
-                      )
-                  : null,
+            Observer(
+              builder: (context) {
+                return CustomElevatedButton(
+                  margin: EdgeInsets.fromLTRB(
+                    AppSizes.size15,
+                    AppSizes.size15,
+                    AppSizes.size15,
+                    AppSizes.size05,
+                  ),
+                  label: "Matricular alunos",
+                  onPressed: enrollmentStore.count < 10
+                      ? () => Modular.to.pushNamed(
+                            '/enrollment/student/enrollment',
+                            arguments: widget.courseEntity,
+                          )
+                      : null,
+                );
+              },
             ),
             CustomOutlinedButton(
               margin: EdgeInsets.all(AppSizes.size15),
               label: "Remover curso",
               labelColor: AppColors.dangerColor,
               borderColor: AppColors.dangerColor,
-              onPressed: () => courseAlert(
-                context,
-                widget.courseEntity.name,
-                courseStore.deleteCourse(
-                  widget.courseEntity.id!,
-                ),
+              onPressed: () => customAlert(
+                context: context,
+                isCourse: true,
+                code: widget.courseEntity.id!,
+                title: "Deletar curso",
+                body:
+                    "Deseja realmente deletar o curso de ${widget.courseEntity.name}?",
               ),
             ),
           ],

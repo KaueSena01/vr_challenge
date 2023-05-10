@@ -56,7 +56,7 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
   }
 
   void _onSearchChanged() {
-    // _courseStore.searchCourses(_searchController.text);
+    _studentStore.searchStudents(_searchController.text);
   }
 
   void handleStudentSelection(int studentId) {
@@ -123,8 +123,8 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
                                   ),
                                   CustomSpace(height: AppSizes.size35),
                                   StudentsList(
-                                    studentEntity:
-                                        _studentStore.studentsListNoEnrollment,
+                                    studentEntity: _studentStore
+                                        .filteredStudentsNoEnrollment,
                                     onStudentSelected: (studentId) =>
                                         handleStudentSelection(studentId),
                                     selectedStudents:

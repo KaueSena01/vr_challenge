@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:vr_challenge/app/layers/domain/entities/admin_entity.dart';
+import 'package:vr_challenge/app/layers/domain/entities/course_entity.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/pages/widgets/search_without_result.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/courses.dart';
 import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/home_background.dart';
@@ -25,11 +27,16 @@ class _HomePageState extends State<HomePage> {
   final HomeStore _homeStore = Modular.get<HomeStore>();
 
   final CourseStore _courseStore = Modular.get<CourseStore>();
+  List<CourseEntity>? courses;
 
   @override
   void initState() {
     super.initState();
     _courseStore.getAllCourses();
+  }
+
+  void onSearchTextChanged(String course) {
+    _courseStore.searchCourses(course);
   }
 
   @override
@@ -39,13 +46,22 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HomeBackgroundCard(adminEntity: widget.adminEntity),
+            HomeBackgroundCard(
+              adminEntity: widget.adminEntity,
+              onSearchTextChanged: (course) => onSearchTextChanged(course),
+            ),
             Observer(
-              builder: (_) => _courseStore.loading
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : Courses(courseEntity: _courseStore.coursesList),
+              builder: (context) {
+                if (_courseStore.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return _courseStore.filteredCourses.isEmpty
+                      ? const SearchWithoutResult()
+                      : Courses(courseEntity: _courseStore.filteredCourses);
+                }
+              },
             ),
           ],
         ),
