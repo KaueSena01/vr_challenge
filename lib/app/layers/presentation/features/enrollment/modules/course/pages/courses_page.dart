@@ -19,7 +19,6 @@ class CoursesPage extends StatefulWidget {
 }
 
 class _CoursesPageState extends State<CoursesPage> {
-  final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
 
   final CourseStore _courseStore = Modular.get<CourseStore>();
@@ -44,7 +43,6 @@ class _CoursesPageState extends State<CoursesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +61,6 @@ class _CoursesPageState extends State<CoursesPage> {
                     AppSizes.size35,
                   ),
                   child: Form(
-                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

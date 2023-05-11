@@ -15,9 +15,9 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-Ajustar textformfield, o de login deve ter estilo próprio enquanto o outros terão estilo global
+Ajustar textformfield, o de login deve ter estilo próprio enquanto o outros terão estilo global _
 alterar a service do admin para dto
-instancia database no module
-pesquisar sobre computed
+instancia database no module _
+pesquisar sobre computed \*
 ajustar background do scaffold
 tabelas no plural

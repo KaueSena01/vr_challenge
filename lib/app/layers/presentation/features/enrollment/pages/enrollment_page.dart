@@ -28,12 +28,10 @@ class EnrollmentPage extends StatefulWidget {
 }
 
 class _EnrollmentPageState extends State<EnrollmentPage> {
-  final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
 
   final StudentStore _studentStore = Modular.get<StudentStore>();
   final EnrollmentStore _enrollmentStore = Modular.get<EnrollmentStore>();
-  // final CourseStore _courseStore = Modular.get<CourseStore>();
 
   @override
   void initState() {
@@ -66,7 +64,6 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +74,6 @@ class _EnrollmentPageState extends State<EnrollmentPage> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: AppSizes.size15),
                   child: Form(
-                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [

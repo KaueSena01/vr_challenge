@@ -10,12 +10,12 @@ class StudentService {
   Future<StudentDTO> insertStudent(StudentDTO studentDTO) async {
     try {
       final id = await database.insert(
-        'student',
+        'students',
         studentDTO.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
       final studentMap = await database.query(
-        'student',
+        'students',
         where: 'id = ?',
         whereArgs: [id],
       );
@@ -27,7 +27,7 @@ class StudentService {
   }
 
   Future<List<StudentDTO>> getAllStudents() async {
-    final List<Map<String, dynamic>> maps = await database.query('student');
+    final List<Map<String, dynamic>> maps = await database.query('students');
     return List.generate(
       maps.length,
       (i) {
@@ -44,7 +44,7 @@ class StudentService {
   Future<void> updateStudent(StudentDTO studentDTO) async {
     try {
       await database.update(
-        'student',
+        'students',
         studentDTO.toMap(),
         where: 'id = ?',
         whereArgs: [studentDTO.id],
@@ -57,7 +57,7 @@ class StudentService {
   Future<void> deleteStudent(int studentCode) async {
     try {
       await database.delete(
-        'student',
+        'students',
         where: 'id = ?',
         whereArgs: [studentCode],
       );
@@ -68,7 +68,7 @@ class StudentService {
 
   Future<List<StudentDTO>> getStudentsByIds(List<int> ids) async {
     final List<Map<String, dynamic>> maps = await database.query(
-      'student',
+      'students',
       where: 'id IN (${ids.map((id) => '?').join(',')})',
       whereArgs: ids,
     );

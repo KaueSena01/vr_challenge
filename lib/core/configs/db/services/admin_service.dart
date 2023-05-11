@@ -8,7 +8,7 @@ class AdminService {
 
   Future<AdminDTO> getAdmin(String email, String password) async {
     final data = await database.query(
-      'admin',
+      'admins',
       where: 'email = ? AND password = ?',
       whereArgs: [email, password],
     );

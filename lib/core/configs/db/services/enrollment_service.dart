@@ -16,7 +16,7 @@ class EnrollmentService {
 
       for (final courseCode in enrollmentDTO.courseCode) {
         batch.insert(
-          'enrollment',
+          'enrollments',
           {
             'courseCode': courseCode,
             'studentCode': studentCode,
@@ -34,7 +34,7 @@ class EnrollmentService {
 
   Future<int> getEnrolledCoursesCount(int courseCode) async {
     final results = await database.rawQuery(
-      'SELECT COUNT(*) FROM enrollment WHERE courseCode = ?',
+      'SELECT COUNT(*) FROM enrollments WHERE courseCode = ?',
       ['$courseCode'],
     );
     return Sqflite.firstIntValue(results) ?? 0;
@@ -42,7 +42,7 @@ class EnrollmentService {
 
   Future<List<int>> getStudentsNotEnrolledForCourse(int courseCode) async {
     final List<Map<String, dynamic>> enrolledStudents = await database.query(
-      'enrollment',
+      'enrollments',
       columns: ['studentCode', 'courseCode'],
       where: 'courseCode = ?',
       whereArgs: [courseCode],
@@ -52,9 +52,9 @@ class EnrollmentService {
 
     final notEnrolledStudents = await database.rawQuery(
       '''
-        SELECT id FROM student
+        SELECT id FROM students
         WHERE id NOT IN (
-          SELECT studentCode FROM enrollment WHERE courseCode != ?
+          SELECT studentCode FROM enrollments WHERE courseCode != ?
         )
         GROUP BY id
         HAVING COUNT(*) < 3
@@ -70,7 +70,7 @@ class EnrollmentService {
 
   Future<List<int>> getEnrolledStudentsForCourse(int courseCode) async {
     final results = await database.query(
-      'enrollment',
+      'enrollments',
       columns: ['studentCode', 'courseCode'],
       where: 'courseCode = ?',
       whereArgs: [courseCode],
@@ -85,7 +85,7 @@ class EnrollmentService {
 
       for (final studentId in studentIds) {
         batch.insert(
-          'enrollment',
+          'enrollments',
           {'studentCode': studentId, 'courseCode': courseId},
         );
       }
@@ -103,14 +103,14 @@ class EnrollmentService {
       final batch = database.batch();
 
       batch.delete(
-        'enrollment',
+        'enrollments',
         where: 'studentCode = ?',
         whereArgs: [studentCode],
       );
 
       for (final courseCode in courseCodes) {
         batch.insert(
-          'enrollment',
+          'enrollments',
           {'studentCode': studentCode, 'courseCode': courseCode},
         );
       }
@@ -130,14 +130,14 @@ class EnrollmentService {
     for (final studentId in studentIds) {
       try {
         final enrollment = await database.query(
-          'enrollment',
+          'enrollments',
           where: 'studentCode = ? AND courseCode = ?',
           whereArgs: [studentId, courseCode],
         );
 
         if (enrollment.isNotEmpty) {
           batch.delete(
-            'enrollment',
+            'enrollments',
             where: 'studentCode = ? AND courseCode = ?',
             whereArgs: [studentId, courseCode],
           );
@@ -154,7 +154,7 @@ class EnrollmentService {
   Future<List<int>> getCoursesEnrolledByStudent(int studentId) async {
     try {
       final results = await database.query(
-        'enrollment',
+        'enrollments',
         where: 'studentCode = ?',
         whereArgs: [studentId],
         columns: ['courseCode'],
@@ -169,7 +169,7 @@ class EnrollmentService {
 
   Future<List<int>> getCoursesNotEnrolledByStudent(int studentId) async {
     final enrolledCourses = await database.query(
-      'enrollment',
+      'enrollments',
       where: 'studentCode = ?',
       whereArgs: [studentId],
       columns: ['courseCode'],
@@ -177,10 +177,10 @@ class EnrollmentService {
 
     final coursesNotEnrolled = await database.rawQuery(
       '''
-        SELECT id FROM course 
+        SELECT id FROM courses 
         WHERE id NOT IN (${enrolledCourses.map((e) => '?').join(', ')})
         AND id NOT IN (
-          SELECT courseCode FROM enrollment 
+          SELECT courseCode FROM enrollments 
           GROUP BY courseCode 
           HAVING COUNT(*) >= 10
         )

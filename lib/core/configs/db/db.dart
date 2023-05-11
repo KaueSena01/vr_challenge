@@ -29,7 +29,7 @@ class DatabaseProvider {
 
   Future<void> createDatabase(Database db, int version) async {
     await db.execute('''
-        CREATE TABLE admin (
+        CREATE TABLE admins (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           name TEXT,
           email TEXT,
@@ -37,7 +37,7 @@ class DatabaseProvider {
         );
       ''');
     await db.execute('''
-          CREATE TABLE course (
+          CREATE TABLE courses (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             description TEXT,
@@ -45,7 +45,7 @@ class DatabaseProvider {
           )
           ''');
     await db.execute('''
-          CREATE TABLE student (
+          CREATE TABLE students (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
             email TEXT,
@@ -54,7 +54,7 @@ class DatabaseProvider {
           ''');
 
     await db.execute('''
-          CREATE TABLE enrollment (
+          CREATE TABLE enrollments (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             studentCode INTEGER,
             courseCode INTEGER
@@ -62,7 +62,7 @@ class DatabaseProvider {
           ''');
 
     await db.insert(
-      'admin',
+      'admins',
       {
         'name': 'Administrador do VR',
         'email': 'adminvr123@gmail.com',
@@ -72,11 +72,11 @@ class DatabaseProvider {
 
     // Inserting
     for (var course in courses) {
-      await db.insert('course', course);
+      await db.insert('courses', course);
     }
 
     for (var student in students) {
-      await db.insert('student', student);
+      await db.insert('students', student);
     }
   }
 }

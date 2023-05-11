@@ -19,7 +19,6 @@ class StudentsPage extends StatefulWidget {
 }
 
 class _StudentsPageState extends State<StudentsPage> {
-  final _formKey = GlobalKey<FormState>();
   final _searchController = TextEditingController();
 
   final StudentStore _studentStore = Modular.get<StudentStore>();
@@ -44,7 +43,6 @@ class _StudentsPageState extends State<StudentsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.whiteColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +61,6 @@ class _StudentsPageState extends State<StudentsPage> {
                     AppSizes.size35,
                   ),
                   child: Form(
-                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
