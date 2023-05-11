@@ -14,21 +14,7 @@ import 'package:vr_challenge/core/configs/db/db.dart';
 
 class HomeModule extends Module {
   @override
-  final List<Bind> binds = [
-    Bind.singleton((i) => DatabaseProvider.instance),
-    Bind((i) => HomeStore()),
-    Bind.lazySingleton((i) => CreateCourseUseCase(courseRepository: i.get())),
-    Bind.lazySingleton(
-        (i) => CourseStore(i.get(), i.get(), i.get(), i.get(), i.get())),
-    Bind.lazySingleton((i) => GetAllCoursesUseCase(courseRepository: i.get())),
-    Bind.lazySingleton(
-        (i) => GetCoursesByIdsUseCase(courseRepository: i.get())),
-    Bind.lazySingleton((i) => UpdateCourseUseCase(courseRepository: i.get())),
-    Bind.lazySingleton((i) => DeleteCourseUseCase(courseRepository: i.get())),
-    Bind.lazySingleton((i) => CourseRepositoryImpl(courseDataSource: i.get())),
-    Bind.lazySingleton((i) => CourseDataSourceImpl(i.get<DatabaseProvider>())),
-  ];
-
+  final List<Bind> binds = _getBinds();
   @override
   final List<ModularRoute> routes = [
     ChildRoute(
@@ -40,4 +26,36 @@ class HomeModule extends Module {
       module: CourseModule(),
     ),
   ];
+
+  static List<Bind> _getBinds() {
+    return [
+      Bind.singleton((i) => DatabaseProvider.instance),
+      ..._getHomeBinds(),
+      ..._getCourseBinds(),
+    ];
+  }
+
+  static List<Bind> _getHomeBinds() {
+    return [
+      Bind((i) => HomeStore()),
+    ];
+  }
+
+  static List<Bind> _getCourseBinds() {
+    return [
+      Bind.lazySingleton((i) => CreateCourseUseCase(courseRepository: i.get())),
+      Bind.lazySingleton(
+          (i) => CourseStore(i.get(), i.get(), i.get(), i.get(), i.get())),
+      Bind.lazySingleton(
+          (i) => GetAllCoursesUseCase(courseRepository: i.get())),
+      Bind.lazySingleton(
+          (i) => GetCoursesByIdsUseCase(courseRepository: i.get())),
+      Bind.lazySingleton((i) => UpdateCourseUseCase(courseRepository: i.get())),
+      Bind.lazySingleton((i) => DeleteCourseUseCase(courseRepository: i.get())),
+      Bind.lazySingleton(
+          (i) => CourseRepositoryImpl(courseDataSource: i.get())),
+      Bind.lazySingleton(
+          (i) => CourseDataSourceImpl(i.get<DatabaseProvider>())),
+    ];
+  }
 }

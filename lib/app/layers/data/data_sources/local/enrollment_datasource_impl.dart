@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:vr_challenge/app/layers/data/data_sources/enrollment_datasource.dart';
 import 'package:vr_challenge/app/layers/data/dtos/enrollment_dto.dart';

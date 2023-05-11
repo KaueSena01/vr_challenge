@@ -1,6 +1,6 @@
+import 'package:mobx/mobx.dart';
 import 'package:asuka/snackbars/asuka_snack_bar.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 import 'package:vr_challenge/app/layers/domain/entities/course_entity.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/create_course_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/delete_course_use_case.dart';
@@ -150,10 +150,10 @@ abstract class _CourseStoreBase with Store {
         selectedCourses = [];
         coursesEnrolled = await _getCoursesByIdsUseCase(courseCode);
         selectedCourses = coursesEnrolled.map((course) => course.id!).toList();
-      } else {
-        if (coursesEnrolled.isEmpty) selectedCourses = [];
-        coursesNotEnrolled = await _getCoursesByIdsUseCase(courseCode);
+      } else if (coursesEnrolled.isEmpty) {
+        selectedCourses = [];
       }
+      coursesNotEnrolled = await _getCoursesByIdsUseCase(courseCode);
     } catch (_) {
       AsukaSnackbar.alert(
         "Ocorreu um erro, verifique o nome do curso",

@@ -1,6 +1,6 @@
+import 'package:mobx/mobx.dart';
 import 'package:asuka/snackbars/asuka_snack_bar.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 import 'package:vr_challenge/app/layers/domain/entities/enrollment_entity.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_courses_enrolled_by_student_use_case.dart';
 import 'package:vr_challenge/app/layers/domain/use_cases/get_courses_not_enrolled_by_student_use_case.dart';
@@ -58,10 +58,10 @@ abstract class _EnrollmentStoreBase with Store {
   int enrollmentCount = 0;
 
   @observable
-  List<int> studentsNotEnrolled = [];
+  List<int> studentsEnrolled = [];
 
   @observable
-  List<int> studentsEnrolled = [];
+  List<int> studentsNotEnrolled = [];
 
   @observable
   List<int> enrollmentCourses = [];

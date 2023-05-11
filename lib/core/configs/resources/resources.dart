@@ -211,8 +211,8 @@ List<Map<String, dynamic>> students = [
     'password': 'password123'
   },
   {
-    'name': 'Julia Garcia',
-    'email': 'julia.garcia@example.com',
+    'name': 'Julia Junior',
+    'email': 'julia.junior@example.com',
     'password': 'password123'
   }
 ];

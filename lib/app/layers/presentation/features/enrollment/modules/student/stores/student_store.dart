@@ -34,10 +34,10 @@ abstract class _StudentStoreBase with Store {
   bool loading = false;
 
   @observable
-  List<StudentEntity> studentsListNoEnrollment = [];
+  List<StudentEntity> studentsList = [];
 
   @observable
-  List<StudentEntity> studentsList = [];
+  List<StudentEntity> studentsListNoEnrollment = [];
 
   @observable
   List<int> selectedStudents = [];
@@ -45,50 +45,33 @@ abstract class _StudentStoreBase with Store {
   @observable
   String searchFilter = '';
 
-  @computed
-  List<StudentEntity> get filteredStudents {
-    final filtered = studentsList.where(
-      (student) {
-        final studentName = student.name.toLowerCase().removeDiacritics();
-        final searchFilterLowercase =
-            searchFilter.toLowerCase().removeDiacritics();
-        final searchWords = searchFilterLowercase
-            .split(RegExp(r'\s+'))
-            .where((s) => s.length >= 3);
-        final nameWords =
-            studentName.split(RegExp(r'\s+')).where((s) => s.length >= 3);
-        return searchWords.every(
-          (searchWord) {
-            return studentName.contains(searchWord) ||
-                nameWords.any((nameWord) => nameWord.contains(searchWord));
-          },
-        );
-      },
-    );
+  List<StudentEntity> filterStudents(
+      List<StudentEntity> students, String searchFilter) {
+    final filtered = students.where((student) {
+      final studentName = student.name.toLowerCase().removeDiacritics();
+      final searchFilterLowercase =
+          searchFilter.toLowerCase().removeDiacritics();
+      final searchWords = searchFilterLowercase
+          .split(RegExp(r'\s+'))
+          .where((s) => s.length >= 3);
+      final nameWords =
+          studentName.split(RegExp(r'\s+')).where((s) => s.length >= 3);
+      return searchWords.every((searchWord) {
+        return studentName.contains(searchWord) ||
+            nameWords.any((nameWord) => nameWord.contains(searchWord));
+      });
+    });
     return filtered.toList();
   }
 
   @computed
+  List<StudentEntity> get filteredStudents {
+    return filterStudents(studentsList, searchFilter);
+  }
+
+  @computed
   List<StudentEntity> get filteredStudentsNoEnrollment {
-    final filtered = studentsListNoEnrollment.where(
-      (student) {
-        final studentName = student.name.toLowerCase().removeDiacritics();
-        final searchFilterLowercase =
-            searchFilter.toLowerCase().removeDiacritics();
-        final searchWords = searchFilterLowercase
-            .split(RegExp(r'\s+'))
-            .where((s) => s.length >= 3);
-        final nameWords =
-            studentName.split(RegExp(r'\s+')).where((s) => s.length >= 3);
-        return searchWords.every(
-          (searchWord) {
-            return studentName.contains(searchWord) ||
-                nameWords.any((nameWord) => nameWord.contains(searchWord));
-          },
-        );
-      },
-    );
-    return filtered.toList();
+    return filterStudents(studentsListNoEnrollment, searchFilter);
   }
 
   @action
@@ -154,7 +137,6 @@ abstract class _StudentStoreBase with Store {
     try {
       final students = await _getAllStudentUseCase();
       studentsList = students;
-      print(studentsList);
     } catch (_) {
       AsukaSnackbar.alert(
         "Ocorreu um erro ao buscar os alunos",

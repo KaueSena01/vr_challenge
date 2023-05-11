@@ -57,22 +57,6 @@ mixin _$EnrollmentStore on _EnrollmentStoreBase, Store {
     });
   }
 
-  late final _$studentsNotEnrolledAtom =
-      Atom(name: '_EnrollmentStoreBase.studentsNotEnrolled', context: context);
-
-  @override
-  List<int> get studentsNotEnrolled {
-    _$studentsNotEnrolledAtom.reportRead();
-    return super.studentsNotEnrolled;
-  }
-
-  @override
-  set studentsNotEnrolled(List<int> value) {
-    _$studentsNotEnrolledAtom.reportWrite(value, super.studentsNotEnrolled, () {
-      super.studentsNotEnrolled = value;
-    });
-  }
-
   late final _$studentsEnrolledAtom =
       Atom(name: '_EnrollmentStoreBase.studentsEnrolled', context: context);
 
@@ -86,6 +70,22 @@ mixin _$EnrollmentStore on _EnrollmentStoreBase, Store {
   set studentsEnrolled(List<int> value) {
     _$studentsEnrolledAtom.reportWrite(value, super.studentsEnrolled, () {
       super.studentsEnrolled = value;
+    });
+  }
+
+  late final _$studentsNotEnrolledAtom =
+      Atom(name: '_EnrollmentStoreBase.studentsNotEnrolled', context: context);
+
+  @override
+  List<int> get studentsNotEnrolled {
+    _$studentsNotEnrolledAtom.reportRead();
+    return super.studentsNotEnrolled;
+  }
+
+  @override
+  set studentsNotEnrolled(List<int> value) {
+    _$studentsNotEnrolledAtom.reportWrite(value, super.studentsNotEnrolled, () {
+      super.studentsNotEnrolled = value;
     });
   }
 
@@ -240,8 +240,8 @@ mixin _$EnrollmentStore on _EnrollmentStoreBase, Store {
 loading: ${loading},
 count: ${count},
 enrollmentCount: ${enrollmentCount},
-studentsNotEnrolled: ${studentsNotEnrolled},
 studentsEnrolled: ${studentsEnrolled},
+studentsNotEnrolled: ${studentsNotEnrolled},
 enrollmentCourses: ${enrollmentCourses},
 coursesNotEnrolled: ${coursesNotEnrolled}
     ''';

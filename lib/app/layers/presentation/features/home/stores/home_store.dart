@@ -18,7 +18,6 @@ abstract class _HomeStoreBase with Store {
     currentIndex = index;
     switch (currentIndex) {
       case 0:
-        print("navegar para tela 1");
         break;
       case 1:
         Modular.to.pushNamed(
@@ -34,7 +33,6 @@ abstract class _HomeStoreBase with Store {
         );
         break;
       case 4:
-        print("navegar para tela 5");
         break;
     }
   }

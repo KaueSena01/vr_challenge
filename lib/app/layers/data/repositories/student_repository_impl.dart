@@ -14,7 +14,7 @@ class StudentRepositoryImpl implements StudentRepository {
 
   @override
   Future<List<StudentEntity>> getAllStudents() async {
-    return studentDataSource.getAllStudents();
+    return await studentDataSource.getAllStudents();
   }
 
   @override

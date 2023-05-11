@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:sqflite/sqflite.dart';
 import 'package:vr_challenge/app/layers/data/dtos/enrollment_dto.dart';
 import 'package:vr_challenge/core/utils/exception.dart';
@@ -52,13 +51,16 @@ class EnrollmentService {
 
     final notEnrolledStudents = await database.rawQuery(
       '''
-        SELECT id FROM students
-        WHERE id NOT IN (
-          SELECT studentCode FROM enrollments WHERE courseCode != ?
-        )
-        GROUP BY id
-        HAVING COUNT(*) < 3
-      ''',
+      SELECT id FROM students
+      WHERE id NOT IN (
+        SELECT studentCode FROM enrollments WHERE courseCode = ?
+      )
+      AND id NOT IN (
+        SELECT studentCode FROM enrollments
+        GROUP BY studentCode
+        HAVING COUNT(*) >= 3
+      )
+    ''',
       [courseCode],
     );
 

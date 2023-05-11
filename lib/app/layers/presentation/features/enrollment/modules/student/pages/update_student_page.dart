@@ -139,10 +139,8 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                   CustomSpace(height: AppSizes.size15),
                                   CoursesList(
                                     courseEntity: _courseStore.coursesEnrolled,
-                                    onCourseSelected: (courseId) {
-                                      handleCourseSelection(courseId);
-                                      print(_courseStore.coursesEnrolled);
-                                    },
+                                    onCourseSelected: (courseId) =>
+                                        handleCourseSelection(courseId),
                                     selectedCourses:
                                         _courseStore.selectedCourses,
                                   ),

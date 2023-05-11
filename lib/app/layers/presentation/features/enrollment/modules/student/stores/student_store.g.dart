@@ -41,6 +41,22 @@ mixin _$StudentStore on _StudentStoreBase, Store {
     });
   }
 
+  late final _$studentsListAtom =
+      Atom(name: '_StudentStoreBase.studentsList', context: context);
+
+  @override
+  List<StudentEntity> get studentsList {
+    _$studentsListAtom.reportRead();
+    return super.studentsList;
+  }
+
+  @override
+  set studentsList(List<StudentEntity> value) {
+    _$studentsListAtom.reportWrite(value, super.studentsList, () {
+      super.studentsList = value;
+    });
+  }
+
   late final _$studentsListNoEnrollmentAtom = Atom(
       name: '_StudentStoreBase.studentsListNoEnrollment', context: context);
 
@@ -55,22 +71,6 @@ mixin _$StudentStore on _StudentStoreBase, Store {
     _$studentsListNoEnrollmentAtom
         .reportWrite(value, super.studentsListNoEnrollment, () {
       super.studentsListNoEnrollment = value;
-    });
-  }
-
-  late final _$studentsListAtom =
-      Atom(name: '_StudentStoreBase.studentsList', context: context);
-
-  @override
-  List<StudentEntity> get studentsList {
-    _$studentsListAtom.reportRead();
-    return super.studentsList;
-  }
-
-  @override
-  set studentsList(List<StudentEntity> value) {
-    _$studentsListAtom.reportWrite(value, super.studentsList, () {
-      super.studentsList = value;
     });
   }
 
@@ -180,8 +180,8 @@ mixin _$StudentStore on _StudentStoreBase, Store {
   String toString() {
     return '''
 loading: ${loading},
-studentsListNoEnrollment: ${studentsListNoEnrollment},
 studentsList: ${studentsList},
+studentsListNoEnrollment: ${studentsListNoEnrollment},
 selectedStudents: ${selectedStudents},
 searchFilter: ${searchFilter},
 filteredStudents: ${filteredStudents},

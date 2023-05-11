@@ -1,9 +1,8 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/pages/create_new_student_page.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/pages/students_page.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/pages/update_student_page.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/pages/enrollment_page.dart';
-
-import '../pages/create_new_student_page.dart';
 
 class StudentModule extends Module {
   @override
