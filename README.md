@@ -51,6 +51,12 @@ Antes de rodar o projeto vale ressaltar que ao executá-lo na primeira vez é in
     }
 ```
 
+Para executar o projeto digite:
+
+```bash
+flutter run
+```
+
 ## Pré requisitos ✔
 
 * [x] Flutter
@@ -58,6 +64,7 @@ Antes de rodar o projeto vale ressaltar que ao executá-lo na primeira vez é in
 * [x] SQLite
 * [x] Aplicação modularizada
 * [x] MobX
+* [x] Versionamento de código
 
 ## Adicionais
 
@@ -79,4 +86,4 @@ Antes de rodar o projeto vale ressaltar que ao executá-lo na primeira vez é in
   </tr>
 </table>
 
-Thanks for your attention.
+Obrigado pela sua atenção.
