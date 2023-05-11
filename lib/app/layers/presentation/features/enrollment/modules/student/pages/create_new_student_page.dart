@@ -10,9 +10,9 @@ import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_subtitle.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_title.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
-import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_sizes.dart';
+import 'package:vr_challenge/core/theme/app_text_styles.dart';
 import 'package:vr_challenge/core/validators/input_validator.dart';
 
 class CreateNewStudent extends StatefulWidget {
@@ -114,7 +114,7 @@ class _CreateNewStudentState extends State<CreateNewStudent> {
                         Text(
                           "Cursos",
                           style: AppTextStyles.textTheme.labelMedium!.apply(
-                            color: AppColors.tertiaryColor,
+                            color: AppColors.primaryColor,
                           ),
                         ),
                         CustomSpace(height: AppSizes.size15),

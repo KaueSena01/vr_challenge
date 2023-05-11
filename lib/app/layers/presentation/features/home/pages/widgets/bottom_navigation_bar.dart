@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vr_challenge/app/layers/presentation/features/home/stores/home_store.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_sizes.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({

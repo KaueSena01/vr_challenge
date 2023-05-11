@@ -11,8 +11,8 @@ import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_but
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_outlined_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_title.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_sizes.dart';
 
 class CoursePage extends StatefulWidget {
   const CoursePage({

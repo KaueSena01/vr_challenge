@@ -1,19 +1,23 @@
 import 'dart:developer';
 
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqlite_api.dart';
 import 'package:vr_challenge/app/layers/data/data_sources/admin_datasource.dart';
 import 'package:vr_challenge/app/layers/domain/entities/admin_entity.dart';
 import 'package:vr_challenge/core/configs/db/db.dart';
 import 'package:vr_challenge/core/configs/db/services/admin_service.dart';
 
 class AdminDataSourceImpl extends AdminDataSource {
-  late Database db;
+  final DatabaseProvider databaseProvider;
+
+  AdminDataSourceImpl(this.databaseProvider);
+
+  late Database database;
 
   @override
   Future<AdminEntity> signIn(AdminEntity adminEntity) async {
-    db = await DatabaseProvider.instance.database;
+    database = await databaseProvider.database;
 
-    final admin = AdminService(database: db);
+    final admin = AdminService(database: database);
     try {
       final result = await admin.getAdmin(
         adminEntity.email,

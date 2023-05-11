@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:vr_challenge/app/layers/data/dtos/course_dto.dart';
+import 'package:vr_challenge/core/utils/exception.dart';
 
 class CourseService {
   final Database database;
@@ -14,7 +15,7 @@ class CourseService {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     } catch (_) {
-      throw "Ocorreu um erro";
+      throw exceptionMessage;
     }
   }
 
@@ -62,7 +63,7 @@ class CourseService {
         whereArgs: [courseDTO.id],
       );
     } catch (_) {
-      throw "Ocorreu um erro";
+      throw exceptionMessage;
     }
   }
 
@@ -74,7 +75,7 @@ class CourseService {
         whereArgs: [courseCode],
       );
     } catch (_) {
-      throw "Ocorreu um erro";
+      throw exceptionMessage;
     }
   }
 }

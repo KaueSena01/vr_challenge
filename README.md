@@ -21,32 +21,3 @@ instancia database no module
 pesquisar sobre computed
 ajustar background do scaffold
 tabelas no plural
-
-O que falta:
-AlUNO:
-
-- Adicionar os alunos ao curso na tela de matricula
-  - Ao adicionar, deve contabilizar quantos alunos já estão matriculados e deve
-    impedir para não ser maior que 10
-- Ao remover o curso também deve ser removido do array dos estudantes
-- Pesquisar aluno
-  pegar o id de cada aluno em um array [1, 2, 3]
-  pegar o id do curso 1
-
-atualizar no banco aluno 1 - curso [0, 1]
-aluno 2 - curso [1]
-
-remover formkey
-
-CURSO:
-Engenharia id -> 1
-
-StudentsNodEnrollment [1, 2, 3] -> remover o id do curso em cada um desses elementos
-
-Envia o id do aluno e busca o array de ids do curso
-Após ter o id dos cursos busca os cursos
-Exibi os cursos em que está matriculado
-Exibi os cursos em que não está matriculado
-Pode remover e adicionar novos, exemplo curso id -> 1 -> remove
-id -> 2, 3, 4
-Se não remover id -> 1, 2, 3

@@ -29,12 +29,14 @@ import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/student/stores/student_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/stores/enrollment_store.dart';
+import 'package:vr_challenge/core/configs/db/db.dart';
 
 import 'student/modules/student_module.dart';
 
 class EnrollmentModule extends Module {
   @override
   final List<Bind> binds = [
+    Bind.singleton((i) => DatabaseProvider.instance),
     Bind.lazySingleton((i) => CreateCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton(
         (i) => CreateNewStudentUseCase(studentRepository: i.get())),
@@ -45,7 +47,7 @@ class EnrollmentModule extends Module {
     Bind.lazySingleton((i) => DeleteStudentUseCase(studentRepository: i.get())),
     Bind.lazySingleton(
         (i) => StudentRepositoryImpl(studentDataSource: i.get())),
-    Bind.lazySingleton((i) => StudentDataSourceImpl()),
+    Bind.lazySingleton((i) => StudentDataSourceImpl(i.get<DatabaseProvider>())),
     Bind.lazySingleton(
         (i) => StudentStore(i.get(), i.get(), i.get(), i.get(), i.get())),
     Bind.lazySingleton(
@@ -56,10 +58,11 @@ class EnrollmentModule extends Module {
     Bind.lazySingleton((i) => UpdateCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => DeleteCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => CourseRepositoryImpl(courseDataSource: i.get())),
-    Bind.lazySingleton((i) => CourseDataSourceImpl()),
+    Bind.lazySingleton((i) => CourseDataSourceImpl(i.get<DatabaseProvider>())),
 
     //
-    Bind.lazySingleton((i) => EnrollmentDataSourceImpl()),
+    Bind.lazySingleton(
+        (i) => EnrollmentDataSourceImpl(i.get<DatabaseProvider>())),
     Bind.lazySingleton(
         (i) => EnrollmentRepositoryImpl(enrollmentDataSource: i.get())),
     Bind.lazySingleton(

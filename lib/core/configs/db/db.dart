@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:vr_challenge/core/configs/resources/resources.dart';
 
 class DatabaseProvider {
   static final DatabaseProvider instance = DatabaseProvider._();
@@ -22,11 +23,11 @@ class DatabaseProvider {
     return openDatabase(
       join(path, 'database.db'),
       version: 1,
-      onCreate: _createDatabase,
+      onCreate: createDatabase,
     );
   }
 
-  Future<void> _createDatabase(Database db, int version) async {
+  Future<void> createDatabase(Database db, int version) async {
     await db.execute('''
         CREATE TABLE admin (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -68,5 +69,14 @@ class DatabaseProvider {
         'password': 'admin123',
       },
     );
+
+    // Inserting
+    for (var course in courses) {
+      await db.insert('course', course);
+    }
+
+    for (var student in students) {
+      await db.insert('student', student);
+    }
   }
 }

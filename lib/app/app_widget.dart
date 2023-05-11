@@ -1,7 +1,7 @@
 import 'package:asuka/asuka.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:vr_challenge/core/constants/theme/app_theme.dart';
+import 'package:vr_challenge/core/theme/app_theme.dart';
 
 class AppWidget extends StatelessWidget {
   AppWidget({super.key});

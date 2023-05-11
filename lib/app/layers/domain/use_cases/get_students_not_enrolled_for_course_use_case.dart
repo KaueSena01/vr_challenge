@@ -6,7 +6,8 @@ class GetStudentsNotEnrolledForCourseUseCase {
   GetStudentsNotEnrolledForCourseUseCase({required this.enrollmentRepository});
 
   Future<List<int>> call(int courseCode) async {
-    return await enrollmentRepository
-        .getStudentsNotEnrolledForCourse(courseCode);
+    return await enrollmentRepository.getStudentsNotEnrolledForCourse(
+      courseCode,
+    );
   }
 }

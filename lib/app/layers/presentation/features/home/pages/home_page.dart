@@ -9,7 +9,7 @@ import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets
 import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/home_background.dart';
 import 'package:vr_challenge/app/layers/presentation/features/home/stores/home_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/home/pages/widgets/bottom_navigation_bar.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({

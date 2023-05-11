@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
-import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_sizes.dart';
+import 'package:vr_challenge/core/theme/app_text_styles.dart';
 
 class CustomLoginTextField extends StatefulWidget {
   final String? labelText;
@@ -56,6 +56,7 @@ class _CustomLoginTextFieldState extends State<CustomLoginTextField> {
       validator: widget.validator,
       keyboardType: widget.textInputType,
       textAlign: TextAlign.center,
+      cursorColor: AppColors.whiteColor,
       style: AppTextStyles.textTheme.labelSmall!.apply(
         color: AppColors.whiteColor,
       ),

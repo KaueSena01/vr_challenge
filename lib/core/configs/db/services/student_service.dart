@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:vr_challenge/app/layers/data/dtos/student_dto.dart';
+import 'package:vr_challenge/core/utils/exception.dart';
 
 class StudentService {
   final Database database;
@@ -21,7 +22,7 @@ class StudentService {
       final student = StudentDTO.fromMap(studentMap.first);
       return student;
     } catch (_) {
-      throw "Ocorreu um erro";
+      throw exceptionMessage;
     }
   }
 
@@ -49,7 +50,7 @@ class StudentService {
         whereArgs: [studentDTO.id],
       );
     } catch (_) {
-      throw "Ocorreu um erro";
+      throw exceptionMessage;
     }
   }
 
@@ -61,7 +62,7 @@ class StudentService {
         whereArgs: [studentCode],
       );
     } catch (_) {
-      throw "Ocorreu um erro";
+      throw exceptionMessage;
     }
   }
 

@@ -7,8 +7,8 @@ import 'package:vr_challenge/app/layers/presentation/widgets/custom_app_bar.dart
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_elevated_button.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_title.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_sizes.dart';
 import 'package:vr_challenge/core/validators/input_validator.dart';
 
 class UpdateCoursePage extends StatefulWidget {

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 abstract class AppColors {
   static Color primaryColor = const Color(0xFF6164C8);
-  static Color secondaryColor = const Color(0xFF00048E);
-  static Color tertiaryColor = const Color(0xFF6164C8);
-  static Color quaternaryColor = const Color(0xFF0049B2);
+  static Color secondaryColor = const Color(0xFF0049B2);
   static Color dangerColor = const Color(0xFFFF4455);
   static Color cardColor = const Color(0xFFF3F4F6);
   static Color blackColor = const Color(0xFF000000);

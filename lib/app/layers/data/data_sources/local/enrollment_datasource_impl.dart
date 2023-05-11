@@ -8,12 +8,15 @@ import 'package:vr_challenge/core/configs/db/db.dart';
 import 'package:vr_challenge/core/configs/db/services/enrollment_service.dart';
 
 class EnrollmentDataSourceImpl extends EnrollmentDataSource {
-  late Database db;
+  EnrollmentDataSourceImpl(this.databaseProvider);
+
+  final DatabaseProvider databaseProvider;
+
+  late Database database;
 
   @override
   Future<void> saveStudentAndCourses(EnrollmentEntity enrollmentEntity) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    final enrollment = EnrollmentService(database: database);
     final enrollmentDTO = EnrollmentDTO.fromEntity(enrollmentEntity);
 
     try {
@@ -26,8 +29,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
 
   @override
   Future<int> getEnrolledCoursesCount(int courseCode) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       return await enrollment.getEnrolledCoursesCount(courseCode);
@@ -39,8 +43,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
 
   @override
   Future<List<int>> getStudentsNotEnrolledForCourse(int courseCode) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       return await enrollment.getStudentsNotEnrolledForCourse(courseCode);
@@ -52,8 +57,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
 
   @override
   Future<List<int>> getEnrolledStudentsForCourse(int courseCode) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       return await enrollment.getEnrolledStudentsForCourse(courseCode);
@@ -68,8 +74,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
     List<int> studentCode,
     int courseCode,
   ) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       await enrollment.addCourseToStudents(studentCode, courseCode);
@@ -84,8 +91,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
     List<int> studentCode,
     int courseCode,
   ) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       await enrollment.removeCourseFromStudents(studentCode, courseCode);
@@ -97,8 +105,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
 
   @override
   Future<List<int>> getCoursesEnrolledByStudent(int studentCode) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       return await enrollment.getCoursesEnrolledByStudent(studentCode);
@@ -110,8 +119,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
 
   @override
   Future<List<int>> getCoursesNotEnrolledByStudent(int studentCode) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       return await enrollment.getCoursesNotEnrolledByStudent(studentCode);
@@ -126,8 +136,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
     int studentCode,
     List<int> courseCodes,
   ) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       return await enrollment.updateEnrolledCourses(studentCode, courseCodes);
@@ -139,8 +150,9 @@ class EnrollmentDataSourceImpl extends EnrollmentDataSource {
 
   @override
   Future<void> removeEnrollment(int studentCode) async {
-    db = await DatabaseProvider.instance.database;
-    final enrollment = EnrollmentService(database: db);
+    database = await databaseProvider.database;
+
+    final enrollment = EnrollmentService(database: database);
 
     try {
       await enrollment.removeEnrollment(studentCode);

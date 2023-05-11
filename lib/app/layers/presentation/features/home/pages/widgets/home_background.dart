@@ -3,9 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vr_challenge/app/layers/domain/entities/admin_entity.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_space.dart';
 import 'package:vr_challenge/app/layers/presentation/widgets/custom_text_field.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
-import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_sizes.dart';
+import 'package:vr_challenge/core/theme/app_text_styles.dart';
 import 'package:vr_challenge/core/utils/name_formart.dart';
 
 class HomeBackgroundCard extends StatelessWidget {

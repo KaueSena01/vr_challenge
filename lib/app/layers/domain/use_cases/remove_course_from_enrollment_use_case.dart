@@ -7,6 +7,8 @@ class RemoveCourseFromEnrollmentUseCase {
 
   Future<void> call(List<int> studentCode, int couseCode) async {
     await enrollmentRepository.removeCourseFromEnrollment(
-        studentCode, couseCode);
+      studentCode,
+      couseCode,
+    );
   }
 }

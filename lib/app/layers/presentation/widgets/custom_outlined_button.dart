@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
-import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_sizes.dart';
+import 'package:vr_challenge/core/theme/app_text_styles.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
   const CustomOutlinedButton({
@@ -32,14 +32,14 @@ class CustomOutlinedButton extends StatelessWidget {
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
           side: BorderSide(
-            color: borderColor ?? AppColors.tertiaryColor,
+            color: borderColor ?? AppColors.primaryColor,
           ),
         ),
         onPressed: onPressed,
         child: Text(
           label,
           style: AppTextStyles.textTheme.labelSmall!.apply(
-            color: labelColor ?? AppColors.tertiaryColor,
+            color: labelColor ?? AppColors.primaryColor,
           ),
         ),
       ),

@@ -8,12 +8,17 @@ import 'package:vr_challenge/core/configs/db/db.dart';
 import 'package:vr_challenge/core/configs/db/services/course_service.dart';
 
 class CourseDataSourceImpl extends CourseDataSource {
-  late Database db;
+  CourseDataSourceImpl(this.databaseProvider);
+
+  final DatabaseProvider databaseProvider;
+
+  late Database database;
 
   @override
   Future<void> createCourse(CourseEntity courseEntity) async {
-    db = await DatabaseProvider.instance.database;
-    final course = CourseService(database: db);
+    database = await databaseProvider.database;
+
+    final course = CourseService(database: database);
     final courseDTO = CourseDTO.fromEntity(courseEntity);
 
     try {
@@ -26,8 +31,9 @@ class CourseDataSourceImpl extends CourseDataSource {
 
   @override
   Future<List<CourseEntity>> getAllCourses() async {
-    db = await DatabaseProvider.instance.database;
-    final course = CourseService(database: db);
+    database = await databaseProvider.database;
+
+    final course = CourseService(database: database);
 
     try {
       return await course.getAllCourses();
@@ -39,8 +45,9 @@ class CourseDataSourceImpl extends CourseDataSource {
 
   @override
   Future<void> updateCourse(CourseEntity courseEntity) async {
-    db = await DatabaseProvider.instance.database;
-    final course = CourseService(database: db);
+    database = await databaseProvider.database;
+
+    final course = CourseService(database: database);
     final courseDTO = CourseDTO.fromEntity(courseEntity);
 
     try {
@@ -53,8 +60,9 @@ class CourseDataSourceImpl extends CourseDataSource {
 
   @override
   Future<void> deleteCourse(int courseCode) async {
-    db = await DatabaseProvider.instance.database;
-    final course = CourseService(database: db);
+    database = await databaseProvider.database;
+
+    final course = CourseService(database: database);
 
     try {
       await course.deleteCourse(courseCode);
@@ -66,8 +74,9 @@ class CourseDataSourceImpl extends CourseDataSource {
 
   @override
   Future<List<CourseEntity>> getCoursesByIds(List<int> courseCode) async {
-    db = await DatabaseProvider.instance.database;
-    final course = CourseService(database: db);
+    database = await databaseProvider.database;
+
+    final course = CourseService(database: database);
 
     try {
       return await course.getCoursesByIds(courseCode);

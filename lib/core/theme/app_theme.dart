@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:vr_challenge/core/constants/theme/app_colors.dart';
-import 'package:vr_challenge/core/constants/theme/app_sizes.dart';
-import 'package:vr_challenge/core/constants/theme/app_text_styles.dart';
+import 'package:vr_challenge/core/theme/app_colors.dart';
+import 'package:vr_challenge/core/theme/app_sizes.dart';
+import 'package:vr_challenge/core/theme/app_text_styles.dart';
 
 abstract class AppTheme {
   static const MaterialColor _primarySwatch = MaterialColor(0xFF03A8E3, {
@@ -21,11 +21,11 @@ abstract class AppTheme {
   static final ThemeData themeData = ThemeData(
     primarySwatch: _primarySwatch,
     primaryColor: const Color(0xFF03A8E3),
-    scaffoldBackgroundColor: AppColors.primaryColor,
+    scaffoldBackgroundColor: AppColors.whiteColor,
     textTheme: AppTextStyles.textTheme,
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.tertiaryColor,
+        backgroundColor: AppColors.primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(BorderRadiusSize.borderRadiusSmall),
@@ -44,7 +44,7 @@ abstract class AppTheme {
         ),
         side: BorderSide(
           width: BorderSize.borderSizeSmall,
-          color: AppColors.tertiaryColor,
+          color: AppColors.primaryColor,
           style: BorderStyle.solid,
         ),
       ),
@@ -52,26 +52,22 @@ abstract class AppTheme {
     cupertinoOverrideTheme: const CupertinoThemeData(),
     brightness: Brightness.light,
     canvasColor: AppColors.primaryColor,
-    // scaffoldBackgroundColor: lightColor,
-    cardTheme: const CardTheme(
-      color: Colors.white,
+    cardTheme: CardTheme(
+      color: AppColors.whiteColor,
       elevation: 0,
-      margin: EdgeInsets.all(0),
+      margin: const EdgeInsets.all(0),
     ),
     inputDecorationTheme: InputDecorationTheme(
       isDense: true,
       filled: true,
-      fillColor: AppColors.quaternaryColor,
+      fillColor: AppColors.secondaryColor,
       floatingLabelBehavior: FloatingLabelBehavior.always,
-
       labelStyle: AppTextStyles.textTheme.headlineSmall!.apply(
         color: AppColors.whiteColor,
       ),
-
       hintStyle: AppTextStyles.textTheme.labelSmall!.apply(
         color: AppColors.labelColor,
       ),
-
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(BorderRadiusSize.borderRadiusSmall),
         borderSide: BorderSide(
@@ -94,14 +90,8 @@ abstract class AppTheme {
         ),
       ),
       errorStyle: AppTextStyles.textTheme.headlineSmall!.apply(
-        color: Colors.red,
+        color: AppColors.dangerColor,
       ),
-      // TextStyle(
-      //   fontSize: 12,
-      //   fontWeight: FontWeight.w300,
-      //   fontFamily: 'Poppins',
-      //   color: AppColors.whiteColor,
-      // ),
     ),
     colorScheme: ColorScheme.light(
       primary: AppColors.primaryColor,

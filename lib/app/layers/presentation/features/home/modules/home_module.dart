@@ -10,14 +10,14 @@ import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules
 import 'package:vr_challenge/app/layers/presentation/features/enrollment/modules/course/stores/course_store.dart';
 import 'package:vr_challenge/app/layers/presentation/features/home/pages/home_page.dart';
 import 'package:vr_challenge/app/layers/presentation/features/home/stores/home_store.dart';
+import 'package:vr_challenge/core/configs/db/db.dart';
 
 class HomeModule extends Module {
   @override
   final List<Bind> binds = [
+    Bind.singleton((i) => DatabaseProvider.instance),
     Bind((i) => HomeStore()),
-    Bind((i) => CreateCourseUseCase(courseRepository: i.get())),
-    Bind((i) => CourseRepositoryImpl(courseDataSource: i.get())),
-    Bind((i) => CourseDataSourceImpl()),
+    Bind.lazySingleton((i) => CreateCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton(
         (i) => CourseStore(i.get(), i.get(), i.get(), i.get(), i.get())),
     Bind.lazySingleton((i) => GetAllCoursesUseCase(courseRepository: i.get())),
@@ -26,7 +26,7 @@ class HomeModule extends Module {
     Bind.lazySingleton((i) => UpdateCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => DeleteCourseUseCase(courseRepository: i.get())),
     Bind.lazySingleton((i) => CourseRepositoryImpl(courseDataSource: i.get())),
-    Bind.lazySingleton((i) => CourseDataSourceImpl()),
+    Bind.lazySingleton((i) => CourseDataSourceImpl(i.get<DatabaseProvider>())),
   ];
 
   @override

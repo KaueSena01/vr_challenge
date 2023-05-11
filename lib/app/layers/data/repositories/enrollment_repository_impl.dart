@@ -54,9 +54,7 @@ class EnrollmentRepositoryImpl implements EnrollmentRepository {
 
   @override
   Future<void> updateEnrolledCourses(
-    int studentCode,
-    List<int> courseCodes,
-  ) async {
+      int studentCode, List<int> courseCodes) async {
     await enrollmentDataSource.updateEnrolledCourses(studentCode, courseCodes);
   }
 

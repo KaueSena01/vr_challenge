@@ -8,12 +8,17 @@ import 'package:vr_challenge/core/configs/db/db.dart';
 import 'package:vr_challenge/core/configs/db/services/student_service.dart';
 
 class StudentDataSourceImpl extends StudentDataSource {
-  late Database db;
+  StudentDataSourceImpl(this.databaseProvider);
+
+  final DatabaseProvider databaseProvider;
+
+  late Database database;
 
   @override
   Future<StudentEntity> createNewStudent(StudentEntity studentEntity) async {
-    db = await DatabaseProvider.instance.database;
-    final student = StudentService(database: db);
+    database = await databaseProvider.database;
+
+    final student = StudentService(database: database);
     final studentDTO = StudentDTO.fromEntity(studentEntity);
 
     try {
@@ -26,8 +31,9 @@ class StudentDataSourceImpl extends StudentDataSource {
 
   @override
   Future<List<StudentEntity>> getAllStudents() async {
-    db = await DatabaseProvider.instance.database;
-    final studentService = StudentService(database: db);
+    database = await databaseProvider.database;
+
+    final studentService = StudentService(database: database);
 
     try {
       return await studentService.getAllStudents();
@@ -39,8 +45,9 @@ class StudentDataSourceImpl extends StudentDataSource {
 
   @override
   Future<void> updateStudent(StudentEntity studentEntity) async {
-    db = await DatabaseProvider.instance.database;
-    final studentService = StudentService(database: db);
+    database = await databaseProvider.database;
+
+    final studentService = StudentService(database: database);
     final studentDTO = StudentDTO.fromEntity(studentEntity);
 
     try {
@@ -53,8 +60,9 @@ class StudentDataSourceImpl extends StudentDataSource {
 
   @override
   Future<void> deleteStudent(int studentCode) async {
-    db = await DatabaseProvider.instance.database;
-    final studentService = StudentService(database: db);
+    database = await databaseProvider.database;
+
+    final studentService = StudentService(database: database);
 
     try {
       await studentService.deleteStudent(studentCode);
@@ -66,8 +74,9 @@ class StudentDataSourceImpl extends StudentDataSource {
 
   @override
   Future<List<StudentEntity>> getStudentsByIds(List<int> studentCode) async {
-    db = await DatabaseProvider.instance.database;
-    final studentService = StudentService(database: db);
+    database = await databaseProvider.database;
+
+    final studentService = StudentService(database: database);
 
     try {
       return await studentService.getStudentsByIds(studentCode);
