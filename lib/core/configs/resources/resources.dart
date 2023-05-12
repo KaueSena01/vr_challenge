@@ -18,6 +18,18 @@ List<Map<String, dynamic>> courses = [
         'Lorem ipsum dolor sit amet. In ipsum dignissimos qui rerum architecto aut voluptatem earum et assumenda cumque'
   },
   {
+    'name': 'Química',
+    'description': 'O curso de química oferta 10 vagas...',
+    'syllabus':
+        'Lorem ipsum dolor sit amet. In ipsum dignissimos qui rerum architecto aut voluptatem earum et assumenda cumque'
+  },
+  {
+    'name': 'Biologia',
+    'description': 'O curso de biologia oferta 10 vagas...',
+    'syllabus':
+        'Lorem ipsum dolor sit amet. In ipsum dignissimos qui rerum architecto aut voluptatem earum et assumenda cumque'
+  },
+  {
     'name': 'Nutrição',
     'description': 'O curso de nutrição oferta 10 vagas...',
     'syllabus':
@@ -67,13 +79,13 @@ List<Map<String, dynamic>> courses = [
   },
   {
     'name': 'Administração',
-    'description': 'O curso de administração oferta 10 vagas...t',
+    'description': 'O curso de administração oferta 10 vagas...',
     'syllabus':
         'Lorem ipsum dolor sit amet. In ipsum dignissimos qui rerum architecto aut voluptatem earum et assumenda cumque'
   },
   {
     'name': 'Direito',
-    'description': 'O curso de direito oferta 10 vagas...g',
+    'description': 'O curso de direito oferta 10 vagas...',
     'syllabus':
         'Lorem ipsum dolor sit amet. In ipsum dignissimos qui rerum architecto aut voluptatem earum et assumenda cumque'
   },
@@ -98,12 +110,6 @@ List<Map<String, dynamic>> courses = [
   {
     'name': 'Psicologia',
     'description': 'O curso de psicologia oferta 10 vagas...',
-    'syllabus':
-        'Lorem ipsum dolor sit amet. In ipsum dignissimos qui rerum architecto aut voluptatem earum et assumenda cumque'
-  },
-  {
-    'name': 'Química',
-    'description': 'O curso de química oferta 10 vagas...',
     'syllabus':
         'Lorem ipsum dolor sit amet. In ipsum dignissimos qui rerum architecto aut voluptatem earum et assumenda cumque'
   },
